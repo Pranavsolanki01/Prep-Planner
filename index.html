@@ -24,14 +24,32 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.6;min-height:100vh;overflow-x:hidden}
 
 /* NAV */
-#nav{position:fixed;top:0;left:0;right:0;z-index:999;height:52px;background:rgba(10,12,16,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:6px}
-#nav-brand{font-weight:800;font-size:16px;color:var(--g);margin-right:20px;letter-spacing:-0.5px;white-space:nowrap}
-#nav-tabs{display:flex;gap:2px;overflow-x:auto;flex:1}
+#nav{position:fixed;top:0;left:0;right:0;z-index:999;height:52px;background:rgba(10,12,16,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:8px}
+#nav-brand{font-weight:800;font-size:16px;color:var(--g);letter-spacing:-0.5px;white-space:nowrap;flex-shrink:0}
+#nav-tabs{display:flex;gap:2px;overflow-x:auto;flex:1;margin:0 8px}
 #nav-tabs::-webkit-scrollbar{display:none}
-.ntab{padding:5px 13px;border-radius:6px;border:none;background:transparent;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:var(--font);transition:all .15s}
+.ntab{padding:5px 13px;border-radius:6px;border:1px solid transparent;background:transparent;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:var(--font);transition:all .15s;flex-shrink:0}
 .ntab:hover{color:var(--text);background:var(--surface2)}
-.ntab.on{color:var(--g);background:var(--gd);border:1px solid var(--gm)}
-#countdown{margin-left:auto;background:var(--surface2);border:1px solid var(--am);color:var(--a);font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;white-space:nowrap;font-family:var(--mono)}
+.ntab.on{color:var(--g);background:var(--gd);border-color:var(--gm)}
+#countdown{background:var(--surface2);border:1px solid var(--am);color:var(--a);font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;white-space:nowrap;font-family:var(--mono);flex-shrink:0}
+/* Hamburger button — hidden on desktop */
+#hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:36px;height:36px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;flex-shrink:0;padding:0}
+#hamburger span{display:block;width:18px;height:2px;background:var(--text);border-radius:2px;transition:all .25s}
+#hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+#hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+#hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+/* Mobile menu drawer */
+#mobile-menu{display:none;position:fixed;top:52px;left:0;right:0;bottom:0;z-index:998;background:rgba(10,12,16,.98);backdrop-filter:blur(20px);padding:16px;overflow-y:auto;flex-direction:column;gap:4px}
+#mobile-menu.open{display:flex}
+.mmtab{padding:13px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:15px;font-weight:500;cursor:pointer;font-family:var(--font);text-align:left;transition:all .15s;width:100%}
+.mmtab:hover{background:var(--surface2);color:var(--text);border-color:var(--border2)}
+.mmtab.on{color:var(--g);background:var(--gd);border-color:var(--gm);font-weight:600}
+/* Responsive breakpoint */
+@media(max-width:700px){
+  #nav-tabs{display:none}
+  #hamburger{display:flex}
+  #countdown{font-size:11px;padding:3px 9px}
+}
 
 /* MAIN */
 #main{padding:68px 20px 40px;max-width:1200px;margin:0 auto}
@@ -193,17 +211,32 @@ a{color:var(--b)}
 <nav id="nav">
   <div id="nav-brand">Prep-Plan'26</div>
   <div id="nav-tabs">
-    <button class="ntab on"  data-page="dashboard">🏠 Dashboard</button>
-    <button class="ntab"     data-page="today">📅 Today</button>
-    <button class="ntab"     data-page="plan">🗓 140-Day Plan</button>
-    <button class="ntab"     data-page="weeks">📋 Week Plan</button>
-    <button class="ntab"     data-page="syllabus">📖 Syllabus</button>
-    <button class="ntab"     data-page="resources">🔗 Resources</button>
-    <button class="ntab"     data-page="tracker">📊 Tracker</button>
-    <button class="ntab"     data-page="sleep">😴 Sleep</button>
+    <button class="ntab on" data-page="dashboard">🏠 Dashboard</button>
+    <button class="ntab"    data-page="today">📅 Today</button>
+    <button class="ntab"    data-page="plan">🗓 140-Day Plan</button>
+    <button class="ntab"    data-page="weeks">📋 Week Plan</button>
+    <button class="ntab"    data-page="syllabus">📖 Syllabus</button>
+    <button class="ntab"    data-page="resources">🔗 Resources</button>
+    <button class="ntab"    data-page="tracker">📊 Tracker</button>
+    <button class="ntab"    data-page="sleep">😴 Sleep</button>
   </div>
   <div id="countdown">...</div>
+  <button id="hamburger" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile full-screen menu -->
+<div id="mobile-menu" role="dialog" aria-label="Navigation menu">
+  <button class="mmtab on" data-page="dashboard">🏠 Dashboard</button>
+  <button class="mmtab"    data-page="today">📅 Today</button>
+  <button class="mmtab"    data-page="plan">🗓 140-Day Plan</button>
+  <button class="mmtab"    data-page="weeks">📋 Week Plan</button>
+  <button class="mmtab"    data-page="syllabus">📖 Syllabus</button>
+  <button class="mmtab"    data-page="resources">🔗 Resources</button>
+  <button class="mmtab"    data-page="tracker">📊 Tracker</button>
+  <button class="mmtab"    data-page="sleep">😴 Sleep</button>
+</div>
 
 <div id="main">
   <div class="page on" id="page-dashboard"></div>
@@ -387,17 +420,53 @@ function phClass(p) { return p.includes('1') ? 'p1' : p.includes('2') ? 'p2' : '
 function phColor(p) { return p.includes('1') ? 'var(--g)' : p.includes('2') ? 'var(--b)' : 'var(--a)'; }
 
 // ── NAV ───────────────────────────────────────────────────────────
-document.getElementById('nav-tabs').addEventListener('click', function(e) {
-  const btn = e.target.closest('.ntab');
-  if (!btn) return;
-  const pg = btn.dataset.page;
-  document.querySelectorAll('.ntab').forEach(b => b.classList.remove('on'));
+function switchPage(pg) {
+  document.querySelectorAll('.ntab, .mmtab').forEach(b => b.classList.remove('on'));
   document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
-  btn.classList.add('on');
+  document.querySelectorAll(`.ntab[data-page="${pg}"], .mmtab[data-page="${pg}"]`).forEach(b => b.classList.add('on'));
   document.getElementById('page-' + pg).classList.add('on');
   const builders = {tracker: buildTracker, sleep: buildSleep, dashboard: buildDashboard};
   if (builders[pg]) builders[pg]();
+}
+
+// Desktop tabs
+document.getElementById('nav-tabs').addEventListener('click', function(e) {
+  const btn = e.target.closest('.ntab');
+  if (!btn) return;
+  switchPage(btn.dataset.page);
 });
+
+// Mobile menu
+document.getElementById('mobile-menu').addEventListener('click', function(e) {
+  const btn = e.target.closest('.mmtab');
+  if (!btn) return;
+  switchPage(btn.dataset.page);
+  closeMobileMenu();
+});
+
+// Hamburger toggle
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+function closeMobileMenu() {
+  hamburger.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', 'false');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}
+hamburger.addEventListener('click', function() {
+  const isOpen = mobileMenu.classList.contains('open');
+  if (isOpen) {
+    closeMobileMenu();
+  } else {
+    hamburger.classList.add('open');
+    hamburger.setAttribute('aria-expanded', 'true');
+    mobileMenu.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+});
+// Close on outside click / escape
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileMenu(); });
+
 
 // ── COUNTDOWN ─────────────────────────────────────────────────────
 function updateCountdown() {
