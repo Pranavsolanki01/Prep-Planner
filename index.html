@@ -31,7 +31,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .ntab{padding:5px 13px;border-radius:6px;border:1px solid transparent;background:transparent;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:var(--font);transition:all .15s;flex-shrink:0}
 .ntab:hover{color:var(--text);background:var(--surface2)}
 .ntab.on{color:var(--g);background:var(--gd);border-color:var(--gm)}
-#countdown{background:var(--surface2);border:1px solid var(--am);color:var(--a);font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;white-space:nowrap;font-family:var(--mono);flex-shrink:0}
+#nav-right{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
+#countdown{background:var(--surface2);border:1px solid var(--am);color:var(--a);font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;white-space:nowrap;font-family:var(--mono)}
 /* Hamburger button — hidden on desktop */
 #hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:36px;height:36px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;flex-shrink:0;padding:0}
 #hamburger span{display:block;width:18px;height:2px;background:var(--text);border-radius:2px;transition:all .25s}
@@ -220,10 +221,12 @@ a{color:var(--b)}
     <button class="ntab"    data-page="tracker">📊 Tracker</button>
     <button class="ntab"    data-page="sleep">😴 Sleep</button>
   </div>
-  <div id="countdown">...</div>
-  <button id="hamburger" aria-label="Menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
+  <div id="nav-right">
+    <div id="countdown">...</div>
+    <button id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
 <!-- Mobile full-screen menu -->
