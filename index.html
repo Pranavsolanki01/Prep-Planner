@@ -630,10 +630,25 @@ function buildToday() {
 let planFilter = 'all', planSearch = '';
 function buildPlan() {
   const idx = dayIdx();
-  const filtered = DAYS.filter(d =>
-    (planFilter === 'all' || d.phase === planFilter) &&
-    (!planSearch || d.topic.toLowerCase().includes(planSearch) || d.subj.toLowerCase().includes(planSearch) || d.week.toLowerCase().includes(planSearch))
-  );
+  const filtered = DAYS.filter(d => {
+    const q = planSearch;
+    const f = planFilter;
+    // Phase filters
+    if (f === 'Phase 1' || f === 'Phase 2' || f === 'Phase 3') return d.phase === f;
+    // Type filters
+    if (f === 'mock')  return d.type === 'mock';
+    if (f === 'rest')  return d.type === 'rest';
+    // Subject filters
+    const s = (d.subj + ' ' + d.topic).toLowerCase();
+    if (f === 'subj-english')   return s.includes('english') || s.includes('rc') || s.includes('cloze') || s.includes('vocab') || s.includes('grammar');
+    if (f === 'subj-quant')     return s.includes('quant') && !s.includes('di') && !s.includes('data interp');
+    if (f === 'subj-reasoning') return s.includes('reasoning') || s.includes('puzzle') || s.includes('seating') || s.includes('syllogism') || s.includes('coding') || s.includes('blood rel') || s.includes('direction') || s.includes('inequalit');
+    if (f === 'subj-banking')   return s.includes('banking') || s.includes('rbi') || s.includes('sebi') || s.includes('neft');
+    if (f === 'subj-di')        return s.includes('di') || s.includes('data interp') || s.includes('caselet') || s.includes('bar graph') || s.includes('pie chart') || s.includes('line graph');
+    // Search
+    if (q) return s.includes(q) || d.week.toLowerCase().includes(q) || d.date.toLowerCase().includes(q);
+    return true; // 'all'
+  });
   const rows = filtered.map(d => {
     const isToday = d.n - 1 === idx;
     const isDone  = DB[d.full] && DB[d.full].studied === 'Y';
@@ -654,6 +669,15 @@ function buildPlan() {
         <div class="dp-block"><div class="dp-lbl">🌙 Evening Revision</div><div class="dp-val">${d.evening}</div></div>
       </div>`;
   }).join('');
+  const count = filtered.length;
+  const filterLabel = {
+    'all':'All 132 days', 'Phase 1':'Phase 1 days', 'Phase 2':'Phase 2 days', 'Phase 3':'Phase 3 days',
+    'mock':'Mock test days', 'rest':'Rest days',
+    'subj-english':'English days', 'subj-quant':'Quant days', 'subj-reasoning':'Reasoning days',
+    'subj-banking':'Banking days', 'subj-di':'Data Interpretation days'
+  }[planFilter] || 'days';
+  const countEl = document.getElementById('plan-count');
+  if (countEl) countEl.textContent = `${count} ${filterLabel} found`;
   document.getElementById('plan-list').innerHTML = rows || '<div style="padding:40px;text-align:center;color:var(--muted)">No days match your search.</div>';
 }
 
@@ -663,12 +687,23 @@ function initPlan() {
     <div class="pg-sub">Mar 23 → Aug 1, 2026 · Click any day to expand · ✓ to mark done</div>
     <div class="search-row">
       <input class="search-in" id="plan-search" placeholder="Search topic, subject, week..." type="text">
+      <div id="plan-count" style="align-self:center;font-size:12px;color:var(--muted);white-space:nowrap">132 All 132 days found</div>
     </div>
     <div class="ftabs">
       <button class="ftab fall on" data-filter="all">All Days</button>
       <button class="ftab fg"      data-filter="Phase 1">🟢 Phase 1</button>
       <button class="ftab fb"      data-filter="Phase 2">🔵 Phase 2</button>
       <button class="ftab fa"      data-filter="Phase 3">🟠 Phase 3</button>
+      <button class="ftab fall"    data-filter="mock">🎯 Mocks Only</button>
+      <button class="ftab fall"    data-filter="rest">😴 Rest Days</button>
+    </div>
+    <div class="ftabs" style="margin-top:-8px">
+      <span style="font-size:11px;color:var(--faint);align-self:center;margin-right:4px">By Subject:</span>
+      <button class="ftab fall" data-filter="subj-quant">📐 Quant</button>
+      <button class="ftab fall" data-filter="subj-reasoning">🧩 Reasoning</button>
+      <button class="ftab fall" data-filter="subj-english">📝 English</button>
+      <button class="ftab fall" data-filter="subj-banking">🏦 Banking</button>
+      <button class="ftab fall" data-filter="subj-di">📊 DI</button>
     </div>
     <div id="plan-list"></div>`;
 
@@ -677,16 +712,16 @@ function initPlan() {
     buildPlan();
   });
 
-  document.querySelector('.ftabs').addEventListener('click', function(e) {
-    const btn = e.target.closest('.ftab');
-    if (!btn) return;
-    document.querySelectorAll('.ftab').forEach(b => b.classList.remove('on'));
-    btn.classList.add('on');
-    planFilter = btn.dataset.filter;
-    buildPlan();
-  });
-
-  document.getElementById('plan-list').addEventListener('click', function(e) {
+  document.getElementById('page-plan').addEventListener('click', function(e) {
+    // Filter tabs — handle both rows of ftabs
+    const ftab = e.target.closest('.ftab');
+    if (ftab) {
+      document.querySelectorAll('.ftab').forEach(b => b.classList.remove('on'));
+      ftab.classList.add('on');
+      planFilter = ftab.dataset.filter;
+      buildPlan();
+      return;
+    }
     // Done button
     const doneBtn = e.target.closest('.done-btn');
     if (doneBtn) {
