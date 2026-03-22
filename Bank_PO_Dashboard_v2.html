@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Preparation Planner 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0c10;--surface:#111318;--surface2:#181c24;--surface3:#1e2330;
+  --border:#ffffff0f;--border2:#ffffff18;--border3:#ffffff24;
+  --text:#dde3f0;--muted:#6b7899;--faint:#3a4255;
+  --g:#10d9a0;--gd:#10d9a012;--gm:#10d9a030;
+  --b:#4d9fff;--bd:#4d9fff12;--bm:#4d9fff30;
+  --a:#ffb84d;--ad:#ffb84d12;--am:#ffb84d30;
+  --r:#ff6b6b;--rd:#ff6b6b12;--rm:#ff6b6b30;
+  --p:#b57bff;--pd:#b57bff12;--pm:#b57bff30;
+  --radius:10px;--radius-sm:7px;
+  --font:'Outfit',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.6;min-height:100vh;overflow-x:hidden}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:999;height:52px;background:rgba(10,12,16,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:6px}
+#nav-brand{font-weight:800;font-size:16px;color:var(--g);margin-right:20px;letter-spacing:-0.5px;white-space:nowrap}
+#nav-tabs{display:flex;gap:2px;overflow-x:auto;flex:1}
+#nav-tabs::-webkit-scrollbar{display:none}
+.ntab{padding:5px 13px;border-radius:6px;border:none;background:transparent;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:var(--font);transition:all .15s}
+.ntab:hover{color:var(--text);background:var(--surface2)}
+.ntab.on{color:var(--g);background:var(--gd);border:1px solid var(--gm)}
+#countdown{margin-left:auto;background:var(--surface2);border:1px solid var(--am);color:var(--a);font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;white-space:nowrap;font-family:var(--mono)}
+
+/* MAIN */
+#main{padding:68px 20px 40px;max-width:1200px;margin:0 auto}
+.page{display:none}
+.page.on{display:block;animation:up .25s ease}
+@keyframes up{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* HEADINGS */
+.pg-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.pg-sub{color:var(--muted);font-size:13px;margin-bottom:24px;font-weight:300}
+
+/* STAT CARDS */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:20px}
+.sc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;position:relative;overflow:hidden}
+.sc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.sc.g::after{background:var(--g)}.sc.b::after{background:var(--b)}.sc.a::after{background:var(--a)}.sc.r::after{background:var(--r)}.sc.p::after{background:var(--p)}
+.sc-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:6px}
+.sc-val{font-size:28px;font-weight:800;line-height:1;font-family:var(--mono)}
+.sc.g .sc-val{color:var(--g)}.sc.b .sc-val{color:var(--b)}.sc.a .sc-val{color:var(--a)}.sc.r .sc-val{color:var(--r)}.sc.p .sc-val{color:var(--p)}
+.sc-hint{font-size:11px;color:var(--faint);margin-top:5px}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+.card-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:700px){.grid2,.grid3{grid-template-columns:1fr}}
+
+/* TODAY HERO */
+.today-hero{background:var(--surface);border:1px solid var(--gm);border-radius:var(--radius);padding:22px;margin-bottom:16px;position:relative;overflow:hidden}
+.today-hero::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(16,217,160,.07) 0%,transparent 65%);pointer-events:none}
+.today-badge{display:inline-flex;align-items:center;gap:5px;background:var(--gd);border:1px solid var(--gm);color:var(--g);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:20px;margin-bottom:10px}
+.today-meta-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.pill{background:var(--surface2);border:1px solid var(--border2);border-radius:20px;padding:3px 11px;font-size:12px;color:var(--muted)}
+.pill span{color:var(--text);font-weight:500}
+.task-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.task-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px}
+.task-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);margin-bottom:5px}
+.task-txt{font-size:13px;line-height:1.5}
+@media(max-width:550px){.task-grid{grid-template-columns:1fr}}
+
+/* PROGRESS BAR */
+.prog-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.prog-lbl{font-size:12px;min-width:175px;font-weight:500}
+.prog-track{flex:1;background:var(--surface2);border-radius:4px;height:5px;overflow:hidden}
+.prog-fill{height:100%;border-radius:4px;background:var(--g);transition:width .5s ease}
+.prog-pct{font-size:11px;color:var(--muted);min-width:32px;text-align:right;font-family:var(--mono)}
+
+/* PLAN PAGE */
+.search-row{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.search-in{flex:1;min-width:200px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 14px;color:var(--text);font-size:13px;font-family:var(--font);outline:none;transition:border-color .2s}
+.search-in:focus{border-color:var(--gm)}
+.search-in::placeholder{color:var(--faint)}
+.ftabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.ftab{padding:6px 15px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);transition:all .15s}
+.ftab:hover{border-color:var(--border2);color:var(--text)}
+.ftab.fg.on{background:var(--gd);border-color:var(--gm);color:var(--g)}
+.ftab.fb.on{background:var(--bd);border-color:var(--bm);color:var(--b)}
+.ftab.fa.on{background:var(--ad);border-color:var(--am);color:var(--a)}
+.ftab.fall.on{background:var(--pd);border-color:var(--pm);color:var(--p)}
+
+/* DAY ROWS */
+.day-row{display:grid;grid-template-columns:46px 90px 46px 100px 1fr 36px;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 14px;margin-bottom:6px;cursor:pointer;transition:all .15s;position:relative}
+.day-row:hover{border-color:var(--border2);background:var(--surface2)}
+.day-row.is-today{border-color:var(--gm)!important;background:rgba(16,217,160,.03)!important}
+.day-row.is-done{opacity:.45}
+.day-row.p1{border-left:2px solid var(--g)}
+.day-row.p2{border-left:2px solid var(--b)}
+.day-row.p3{border-left:2px solid var(--a)}
+.dnum{font-family:var(--mono);font-size:12px;color:var(--faint);font-weight:500}
+.ddate{font-size:12px;color:var(--muted)}
+.dday{font-size:11px;color:var(--faint)}
+.dtopic{font-size:13px;font-weight:500}
+.dsubj{font-size:11px;color:var(--muted);margin-top:2px}
+.done-btn{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:13px;transition:all .15s;font-family:var(--font);flex-shrink:0}
+.done-btn:hover{border-color:var(--g);color:var(--g)}
+.done-btn.done{background:var(--g);border-color:var(--g);color:#0a0c10;font-weight:700}
+.detail-panel{display:none;background:var(--surface2);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius-sm) var(--radius-sm);padding:12px 14px;margin-top:-4px;margin-bottom:6px;grid-template-columns:1fr 1fr;gap:10px}
+.detail-panel.open{display:grid}
+.dp-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px}
+.dp-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);margin-bottom:4px}
+.dp-val{font-size:12px;line-height:1.5}
+.dp-link{color:var(--b);text-decoration:none;font-size:12px}
+.dp-link:hover{text-decoration:underline}
+@media(max-width:640px){.day-row{grid-template-columns:1fr 36px}.ddate,.dday,.dnum{display:none}.detail-panel{grid-template-columns:1fr}}
+
+/* BADGES */
+.badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
+.bs{background:var(--bd);color:var(--b);border:1px solid var(--bm)}
+.bm{background:var(--rd);color:var(--r);border:1px solid var(--rm)}
+.br{background:rgba(58,66,85,.4);color:var(--faint);border:1px solid var(--border)}
+.bv{background:var(--pd);color:var(--p);border:1px solid var(--pm)}
+.be{background:var(--gd);color:var(--g);border:1px solid var(--gm)}
+
+/* WEEK CARDS */
+.wk-cards{display:grid;gap:10px}
+.wk-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;display:grid;grid-template-columns:90px 1fr;gap:16px;transition:border-color .15s}
+.wk-card:hover{border-color:var(--border2)}
+.wk-phase{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 8px;border-radius:5px;text-align:center}
+.wk-phase.p1{background:var(--gd);color:var(--g);border:1px solid var(--gm)}
+.wk-phase.p2{background:var(--bd);color:var(--b);border:1px solid var(--bm)}
+.wk-phase.p3{background:var(--ad);color:var(--a);border:1px solid var(--am)}
+.wk-dates{font-size:11px;color:var(--muted);margin-top:4px}
+.wk-topic{font-weight:700;font-size:14px;margin-bottom:4px}
+.wk-detail{font-size:12px;color:var(--muted);line-height:1.5}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.tag{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:2px 8px;font-size:11px;color:var(--faint)}
+
+/* SYLLABUS */
+.syl-sec{margin-bottom:24px}
+.syl-hdr{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.syl-table{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.syl-row{display:grid;grid-template-columns:190px 1fr 90px 90px 95px;gap:0;border-bottom:1px solid var(--border)}
+.syl-row:last-child{border-bottom:none}
+.syl-row.hdr{background:var(--surface2)}
+.syl-cell{padding:9px 12px;font-size:12px}
+.syl-row.hdr .syl-cell{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.syl-topic{font-weight:500}
+.syl-note{font-size:10px;color:var(--g);margin-top:2px}
+.hi{color:var(--r);font-weight:600}.md{color:var(--a);font-weight:600}.lo{color:var(--muted)}
+@media(max-width:700px){.syl-row{grid-template-columns:1fr 1fr}.syl-cell:nth-child(3),.syl-cell:nth-child(4){display:none}}
+
+/* RESOURCES */
+.res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-bottom:24px}
+.res-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:15px;transition:all .15s}
+.res-card:hover{border-color:var(--border2);transform:translateY(-1px)}
+.res-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.res-name{font-size:15px;font-weight:700;margin-bottom:4px}
+.res-desc{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5}
+.res-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;text-decoration:none;padding:5px 12px;border-radius:6px;background:var(--bd);color:var(--b);border:1px solid var(--bm);transition:all .15s}
+.res-btn:hover{background:var(--bm)}
+
+/* TRACKER TABLE */
+.tbl-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border);margin-top:16px}
+table{width:100%;border-collapse:collapse;white-space:nowrap}
+th{background:var(--surface2);padding:9px 11px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border-bottom:1px solid var(--border)}
+td{padding:7px 11px;border-bottom:1px solid var(--border);font-size:12px}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--surface2)}
+.ti{background:transparent;border:none;color:var(--text);font-size:12px;font-family:var(--font);outline:none;width:100%;min-width:30px;text-align:center}
+.ti:focus{background:var(--surface2);border-radius:4px}
+.tr-p1{border-left:2px solid var(--g)}.tr-p2{border-left:2px solid var(--b)}.tr-p3{border-left:2px solid var(--a)}
+
+/* MILESTONE GRID */
+.ms-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.ms-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px}
+.ms-name{font-size:13px;font-weight:600;margin-bottom:3px}
+.ms-date{font-size:11px;color:var(--muted);margin-bottom:8px}
+.ms-days{font-size:14px;font-weight:700}
+
+/* MISC */
+.save-toast{position:fixed;bottom:20px;right:20px;background:var(--g);color:#0a0c10;padding:9px 18px;border-radius:8px;font-weight:700;font-size:13px;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none}
+.save-toast.show{opacity:1}
+a{color:var(--b)}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div id="nav-brand">Prep-Plan'26</div>
+  <div id="nav-tabs">
+    <button class="ntab on"  data-page="dashboard">🏠 Dashboard</button>
+    <button class="ntab"     data-page="today">📅 Today</button>
+    <button class="ntab"     data-page="plan">🗓 140-Day Plan</button>
+    <button class="ntab"     data-page="weeks">📋 Week Plan</button>
+    <button class="ntab"     data-page="syllabus">📖 Syllabus</button>
+    <button class="ntab"     data-page="resources">🔗 Resources</button>
+    <button class="ntab"     data-page="tracker">📊 Tracker</button>
+    <button class="ntab"     data-page="sleep">😴 Sleep</button>
+  </div>
+  <div id="countdown">...</div>
+</nav>
+
+<div id="main">
+  <div class="page on" id="page-dashboard"></div>
+  <div class="page"    id="page-today"></div>
+  <div class="page"    id="page-plan"></div>
+  <div class="page"    id="page-weeks"></div>
+  <div class="page"    id="page-syllabus"></div>
+  <div class="page"    id="page-resources"></div>
+  <div class="page"    id="page-tracker"></div>
+  <div class="page"    id="page-sleep"></div>
+</div>
+
+<div class="save-toast" id="toast">✓ Saved</div>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────
+const DAYS = [
+  {n:1,date:"23 Mar",full:"2026-03-23",day:"Mon",phase:"Phase 1",week:"W1",type:"study",subj:`Quant + Reasoning`,topic:`Number System: types, divisibility rules`,time:`Q:60m R:45m E:20m CA:15m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`Solve 20 Number System Qs`,evening:`Reread divisibility rules (2,3,4,5,9,11)`},
+  {n:2,date:"24 Mar",full:"2026-03-24",day:"Tue",phase:"Phase 1",week:"W1",type:"study",subj:`Quant + Reasoning`,topic:`LCM & HCF — concepts + shortcuts`,time:`Q:60m R:45m E:20m CA:15m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`Solve 25 LCM/HCF Qs`,evening:`Write 5 shortcut formulas from memory`},
+  {n:3,date:"25 Mar",full:"2026-03-25",day:"Wed",phase:"Phase 1",week:"W1",type:"study",subj:`Reasoning + English`,topic:`Coding-Decoding Part 1 + RC practice`,time:`R:60m E:30m CA:20m`,res:`Ankush Lamba`,link:"https://www.youtube.com/@AnkushLamba",practice:`15 Coding-Decoding + 1 RC passage`,evening:`Note 5 unknown words from The Hindu`},
+  {n:4,date:"26 Mar",full:"2026-03-26",day:"Thu",phase:"Phase 1",week:"W1",type:"study",subj:`Quant + Reasoning`,topic:`Simplification & Number Series intro`,time:`Q:60m R:45m E:15m CA:20m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`30 Simplification + 10 Number Series Qs`,evening:`Revise BODMAS rules`},
+  {n:5,date:"27 Mar",full:"2026-03-27",day:"Fri",phase:"Phase 1",week:"W1",type:"study",subj:`Quant + English`,topic:`Percentage — concepts + tricks`,time:`Q:60m E:30m CA:30m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`30 Percentage Qs`,evening:`Read 1 Hindu editorial, mark 5 words`},
+  {n:6,date:"28 Mar",full:"2026-03-28",day:"Sat",phase:"Phase 1",week:"W1",type:"rest",subj:`—`,topic:`Weekly Rest Day`,time:`—`,res:`—`,link:"—",practice:`—`,evening:`Light review of week topics (30 min)`},
+  {n:7,date:"29 Mar",full:"2026-03-29",day:"Sun",phase:"Phase 1",week:"W1",type:"study",subj:`Reasoning + GK`,topic:`Coding-Decoding Part 2 + GKToday quiz`,time:`R:60m E:20m CA:40m`,res:`Ankush Lamba`,link:"https://www.youtube.com/@AnkushLamba",practice:`20 Coding-Decoding + GKToday quiz`,evening:`Revise week Quant topics`},
+  {n:8,date:"30 Mar",full:"2026-03-30",day:"Mon",phase:"Phase 1",week:"W2",type:"study",subj:`Quant + Reasoning`,topic:`Ratio & Proportion — all types`,time:`Q:60m R:45m E:20m CA:15m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`30 Ratio & Proportion Qs`,evening:`Revise Percentage formulas`},
+  {n:9,date:"31 Mar",full:"2026-03-31",day:"Tue",phase:"Phase 1",week:"W2",type:"study",subj:`Reasoning + English`,topic:`Syllogism — Venn diagram method`,time:`R:60m E:30m CA:20m`,res:`Ankush Lamba`,link:"https://www.youtube.com/@AnkushLamba",practice:`20 Syllogism + 1 RC passage`,evening:`Note 5 unknown words from The Hindu`},
+  {n:10,date:"01 Apr",full:"2026-04-01",day:"Wed",phase:"Phase 1",week:"W2",type:"study",subj:`Quant + Reasoning`,topic:`Partnership — capital sharing`,time:`Q:60m R:45m E:20m CA:15m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`25 Partnership Qs`,evening:`Revise Ratio shortcuts`},
+  {n:11,date:"02 Apr",full:"2026-04-02",day:"Thu",phase:"Phase 1",week:"W2",type:"study",subj:`Quant + English`,topic:`Averages — weighted + combined`,time:`Q:60m E:30m CA:30m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`30 Average Qs`,evening:`Read The Hindu editorial`},
+  {n:12,date:"03 Apr",full:"2026-04-03",day:"Fri",phase:"Phase 1",week:"W2",type:"study",subj:`Reasoning + CA`,topic:`Number Series — arithmetic/geometric`,time:`R:60m E:20m CA:40m`,res:`Piyush Varshney`,link:"https://www.youtube.com/@reasoningbypiyushvarshney",practice:`25 Number Series + GKToday quiz`,evening:`Write 3 series patterns from memory`},
+  {n:13,date:"04 Apr",full:"2026-04-04",day:"Sat",phase:"Phase 1",week:"W2",type:"rest",subj:`—`,topic:`Weekly Rest Day`,time:`—`,res:`—`,link:"—",practice:`—`,evening:`Revise Syllogism rules (20 min)`},
+  {n:14,date:"05 Apr",full:"2026-04-05",day:"Sun",phase:"Phase 1",week:"W2",type:"study",subj:`Quant + Reasoning`,topic:`Mixture & Alligation`,time:`Q:60m R:45m E:20m CA:15m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`25 Mixture Qs`,evening:`Revise: Ratio, Avg, Mixture`},
+  {n:15,date:"06 Apr",full:"2026-04-06",day:"Mon",phase:"Phase 1",week:"W3",type:"study",subj:`Quant + English`,topic:`Simple Interest — formula + problems`,time:`Q:60m E:40m CA:20m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`25 SI + 10 Error Spotting Qs`,evening:`Note error types found today`},
+  {n:16,date:"07 Apr",full:"2026-04-07",day:"Tue",phase:"Phase 1",week:"W3",type:"study",subj:`Quant + Reasoning`,topic:`Compound Interest — annual/half-yearly`,time:`Q:60m R:40m CA:20m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`25 CI + 15 Inequality Qs`,evening:`Compare SI vs CI differences`},
+  {n:17,date:"08 Apr",full:"2026-04-08",day:"Wed",phase:"Phase 1",week:"W3",type:"study",subj:`Reasoning + English`,topic:`Inequalities + Cloze test`,time:`R:60m E:40m CA:20m`,res:`Ankush Lamba`,link:"https://www.youtube.com/@AnkushLamba",practice:`20 Inequality + 1 Cloze test`,evening:`Revise inequality rules`},
+  {n:18,date:"09 Apr",full:"2026-04-09",day:"Thu",phase:"Phase 1",week:"W3",type:"study",subj:`Quant + CA`,topic:`Profit & Loss — CP/SP/profit%`,time:`Q:70m CA:50m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`30 Profit & Loss + GKToday quiz`,evening:`Revise Discount & MP formulas`},
+  {n:19,date:"10 Apr",full:"2026-04-10",day:"Fri",phase:"Phase 1",week:"W3",type:"study",subj:`Quant + English`,topic:`Discount & Marked Price`,time:`Q:60m E:40m CA:20m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`25 Discount + 10 Fill in Blanks`,evening:`Read The Hindu editorial`},
+  {n:20,date:"11 Apr",full:"2026-04-11",day:"Sat",phase:"Phase 1",week:"W3",type:"rest",subj:`—`,topic:`Weekly Rest Day`,time:`—`,res:`—`,link:"—",practice:`—`,evening:`Light: Revise SI/CI formulas (20 min)`},
+  {n:21,date:"12 Apr",full:"2026-04-12",day:"Sun",phase:"Phase 1",week:"W3",type:"study",subj:`Reasoning + CA`,topic:`Blood Relations — family tree`,time:`R:70m CA:50m`,res:`Ankush Lamba`,link:"https://www.youtube.com/@AnkushLamba",practice:`20 Blood Relations + GKToday quiz`,evening:`Draw 2 family tree problems`},
+  {n:22,date:"13 Apr",full:"2026-04-13",day:"Mon",phase:"Phase 1",week:"W4",type:"study",subj:`Quant + English`,topic:`Time & Work — efficiency + LCM method`,time:`Q:60m E:40m CA:20m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`30 Time & Work + Para Jumbles`,evening:`Revise LCM method shortcut`},
+  {n:23,date:"14 Apr",full:"2026-04-14",day:"Tue",phase:"Phase 1",week:"W4",type:"study",subj:`Quant + Reasoning`,topic:`Pipes & Cisterns`,time:`Q:60m R:40m CA:20m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`25 Pipes + 15 Direction Sense Qs`,evening:`Note common pipe patterns`},
+  {n:24,date:"15 Apr",full:"2026-04-15",day:"Wed",phase:"Phase 1",week:"W4",type:"study",subj:`Reasoning + English`,topic:`Direction & Distance + Vocab`,time:`R:60m E:40m CA:20m`,res:`Ankush Lamba`,link:"https://www.youtube.com/@AnkushLamba",practice:`20 Direction + 15 Vocab Qs`,evening:`Learn 10 new words with usage`},
+  {n:25,date:"16 Apr",full:"2026-04-16",day:"Thu",phase:"Phase 1",week:"W4",type:"study",subj:`Quant + CA`,topic:`Time Speed Distance — relative speed`,time:`Q:70m CA:50m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`30 TSD + GKToday quiz`,evening:`Revise relative speed formula`},
+  {n:26,date:"17 Apr",full:"2026-04-17",day:"Fri",phase:"Phase 1",week:"W4",type:"study",subj:`Quant + English`,topic:`Boats & Streams`,time:`Q:60m E:40m CA:20m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`20 Boat + 1 RC passage`,evening:`Note upstream/downstream formula`},
+  {n:27,date:"18 Apr",full:"2026-04-18",day:"Sat",phase:"Phase 1",week:"W4",type:"rest",subj:`—`,topic:`Weekly Rest Day`,time:`—`,res:`—`,link:"—",practice:`—`,evening:`Revise Week 3-4 topics (30 min)`},
+  {n:28,date:"19 Apr",full:"2026-04-19",day:"Sun",phase:"Phase 1",week:"W4",type:"study",subj:`Reasoning + CA`,topic:`Order & Ranking + Alphanumeric Series`,time:`R:70m CA:50m`,res:`Piyush Varshney`,link:"https://www.youtube.com/@reasoningbypiyushvarshney",practice:`20 Ranking + 15 Alphanumeric Qs`,evening:`Revise all reasoning so far`},
+  {n:29,date:"20 Apr",full:"2026-04-20",day:"Mon",phase:"Phase 1",week:"W5",type:"study",subj:`Quant + English`,topic:`Mensuration 2D — triangle, circle`,time:`Q:60m E:40m CA:20m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`25 Mensuration + 10 Error Spotting`,evening:`Write area/perimeter formulas`},
+  {n:30,date:"21 Apr",full:"2026-04-21",day:"Tue",phase:"Phase 1",week:"W5",type:"mock",subj:`All Subjects`,topic:`CGL Tier 1 Full Mock Test #1 (60 min timed)`,time:`60m mock + 60m analysis`,res:`Oliveboard`,link:"https://www.oliveboard.in/ibps-po-live-test/",practice:`Full mock under exam conditions`,evening:`Analyse every wrong answer`},
+  {n:31,date:"22 Apr",full:"2026-04-22",day:"Wed",phase:"Phase 1",week:"W5",type:"study",subj:`Quant + Reasoning`,topic:`Mensuration 3D — cylinder, cone, sphere`,time:`Q:60m R:40m CA:20m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`20 3D Mensuration + 15 Puzzle Qs`,evening:`Note 3D formulas`},
+  {n:32,date:"23 Apr",full:"2026-04-23",day:"Thu",phase:"Phase 1",week:"W5",type:"study",subj:`Reasoning + English`,topic:`Basic Puzzles intro + Sentence Improvement`,time:`R:60m E:40m CA:20m`,res:`Ankush Lamba`,link:"https://www.youtube.com/@AnkushLamba",practice:`1 puzzle set + 15 Sentence Improvement`,evening:`Identify weak areas from mock`},
+  {n:33,date:"24 Apr",full:"2026-04-24",day:"Fri",phase:"Phase 1",week:"W5",type:"study",subj:`Quant + CA`,topic:`Geometry — triangles, circles, angles`,time:`Q:60m CA:60m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`20 Geometry + GKToday quiz`,evening:`Download April CA PDF from Adda247`},
+  {n:34,date:"25 Apr",full:"2026-04-25",day:"Sat",phase:"Phase 1",week:"W5",type:"rest",subj:`—`,topic:`Weekly Rest Day`,time:`—`,res:`—`,link:"—",practice:`—`,evening:`Read mock analysis notes (30 min)`},
+  {n:35,date:"26 Apr",full:"2026-04-26",day:"Sun",phase:"Phase 1",week:"W5",type:"mock",subj:`Reasoning`,topic:`PO Prelims Sectional — Reasoning Only`,time:`45m + 30m analysis`,res:`Testbook`,link:"https://testbook.com/ibps-po/free-mock-test",practice:`Reasoning sectional mock`,evening:`Note hardest puzzle types`},
+  {n:36,date:"27 Apr",full:"2026-04-27",day:"Mon",phase:"Phase 1",week:"W6",type:"revision",subj:`Quant`,topic:`Revision: Number System, %, Ratio, SI/CI`,time:`120m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`Reattempt 20 wrong Qs`,evening:`Make 1-page formula cheat sheet`},
+  {n:37,date:"28 Apr",full:"2026-04-28",day:"Tue",phase:"Phase 1",week:"W6",type:"revision",subj:`Reasoning`,topic:`Revision: Coding, Syllogism, Inequalities`,time:`120m`,res:`Ankush Lamba`,link:"https://www.youtube.com/@AnkushLamba",practice:`Reattempt 20 wrong Qs`,evening:`Write key rules on 1 page`},
+  {n:38,date:"29 Apr",full:"2026-04-29",day:"Wed",phase:"Phase 1",week:"W6",type:"mock",subj:`All Subjects`,topic:`CGL Tier 1 Full Mock Test #2 (timed)`,time:`60m mock + 60m analysis`,res:`Oliveboard`,link:"https://www.oliveboard.in/ibps-po-live-test/",practice:`Target: beat Mock 1 score`,evening:`Compare Mock 1 vs Mock 2`},
+  {n:39,date:"30 Apr",full:"2026-04-30",day:"Thu",phase:"Phase 1",week:"W6",type:"revision",subj:`English + CA`,topic:`Revision: RC, Error, Cloze + April CA`,time:`90m + 30m CA`,res:`The Hindu`,link:"https://www.thehindu.com/opinion/editorial/",practice:`Reattempt 15 English Qs`,evening:`Revise all CA this month`},
+  {n:40,date:"01 May",full:"2026-05-01",day:"Fri",phase:"Phase 1",week:"W6",type:"exam",subj:`—`,topic:`SSC CGL TIER 1 EXAM — Give your best!`,time:`Exam day`,res:`—`,link:"—",practice:`Light revision of formulas only`,evening:`Sleep early tonight!`},
+  {n:41,date:"02 May",full:"2026-05-02",day:"Sat",phase:"Phase 1",week:"W6",type:"rest",subj:`—`,topic:`Post-CGL Rest Day — you earned it!`,time:`—`,res:`—`,link:"—",practice:`—`,evening:`Relax completely — no study today`},
+  {n:42,date:"03 May",full:"2026-05-03",day:"Sun",phase:"Phase 1",week:"W6",type:"study",subj:`Banking GK`,topic:`Intro to Banking Awareness: RBI, types of banks`,time:`60m Banking + 60m CA`,res:`Study IQ Bank IQ`,link:"https://www.youtube.com/@BankIQbyStudyIQ",practice:`Read Oliveboard Banking Capsule Ch 1`,evening:`Note: RBI functions, types of banks`},
+  {n:43,date:"04 May",full:"2026-05-04",day:"Mon",phase:"Phase 2",week:"W7",type:"study",subj:`Quant — DI`,topic:`Data Interpretation: Tables`,time:`Q-DI:75m E:25m CA:20m`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`2 Table DI sets (10 Qs each)`,evening:`Fastest approach for table DI`},
+  {n:44,date:"05 May",full:"2026-05-05",day:"Tue",phase:"Phase 2",week:"W7",type:"study",subj:`Quant — DI`,topic:`DI: Bar Graphs — simple + stacked`,time:`Q-DI:75m E:25m CA:20m`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`2 Bar Graph DI sets`,evening:`% change calculation shortcut`},
+  {n:45,date:"06 May",full:"2026-05-06",day:"Wed",phase:"Phase 2",week:"W7",type:"study",subj:`Quant + Reasoning`,topic:`DI: Line Graphs + Seating Arrangement intro`,time:`Q-DI:60m R:50m CA:20m`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`1 Line Graph DI + 1 seating puzzle`,evening:`Draw seating arrangement step-by-step`},
+  {n:46,date:"07 May",full:"2026-05-07",day:"Thu",phase:"Phase 2",week:"W7",type:"study",subj:`Quant — DI`,topic:`DI: Pie Charts`,time:`Q-DI:75m E:25m CA:20m`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`2 Pie Chart DI sets + 10 English Qs`,evening:`Pie chart value formula`},
+  {n:47,date:"08 May",full:"2026-05-08",day:"Fri",phase:"Phase 2",week:"W7",type:"study",subj:`Reasoning + CA`,topic:`Circular Seating Arrangement`,time:`R:75m CA:45m`,res:`Ankush Lamba`,link:"https://www.youtube.com/@AnkushLamba",practice:`2 circular puzzle sets + GKToday`,evening:`Compare linear vs circular approach`},
+  {n:48,date:"09 May",full:"2026-05-09",day:"Sat",phase:"Phase 2",week:"W7",type:"rest",subj:`—`,topic:`Weekly Rest Day`,time:`—`,res:`—`,link:"—",practice:`—`,evening:`Skim 2 DI sets (30 min casual)`},
+  {n:49,date:"10 May",full:"2026-05-10",day:"Sun",phase:"Phase 2",week:"W7",type:"study",subj:`Quant — DI`,topic:`DI: Caselet / Paragraph-based`,time:`Q-DI:90m CA:30m`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`2 Caselet DI sets`,evening:`Highlight numbers first in Caselet DI`},
+  {n:50,date:"11 May",full:"2026-05-11",day:"Mon",phase:"Phase 2",week:"W8",type:"study",subj:`Quant + Algebra`,topic:`Mixed DI + Quadratic Equations`,time:`Q:90m E:30m CA:20m`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`1 Mixed DI + 15 Quadratic Qs`,evening:`Signs rule for quadratic roots`},
+  {n:51,date:"12 May",full:"2026-05-12",day:"Tue",phase:"Phase 2",week:"W8",type:"study",subj:`Reasoning`,topic:`Floor-based Puzzle`,time:`R:90m E:20m CA:20m`,res:`Ankush Lamba`,link:"https://www.youtube.com/@AnkushLamba",practice:`2 floor puzzle sets`,evening:`Table grid method for floor puzzles`},
+  {n:52,date:"13 May",full:"2026-05-13",day:"Wed",phase:"Phase 2",week:"W8",type:"study",subj:`Quant + English`,topic:`Quadratic Equations adv + Cloze`,time:`Q:70m E:50m CA:20m`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`20 Quadratic + 2 Cloze tests`,evening:`Revise factorisation method`},
+  {n:53,date:"14 May",full:"2026-05-14",day:"Thu",phase:"Phase 2",week:"W8",type:"study",subj:`Reasoning + CA`,topic:`Box Puzzle + Coded Blood Relations`,time:`R:90m CA:40m`,res:`Piyush Varshney`,link:"https://www.youtube.com/@reasoningbypiyushvarshney",practice:`2 box sets + 10 Blood Relation Qs`,evening:`Constraint-based elimination`},
+  {n:54,date:"15 May",full:"2026-05-15",day:"Fri",phase:"Phase 2",week:"W8",type:"mock",subj:`Quant`,topic:`PO Prelims Sectional — Quant Only`,time:`35m + 30m analysis`,res:`Testbook`,link:"https://testbook.com/ibps-po/free-mock-test",practice:`Focus on DI + Number Series`,evening:`How many DI Qs correct?`},
+  {n:55,date:"16 May",full:"2026-05-16",day:"Sat",phase:"Phase 2",week:"W8",type:"rest",subj:`—`,topic:`Weekly Rest Day`,time:`—`,res:`—`,link:"—",practice:`—`,evening:`Read banking GK notes (20 min)`},
+  {n:56,date:"17 May",full:"2026-05-17",day:"Sun",phase:"Phase 2",week:"W8",type:"study",subj:`Banking GK + CA`,topic:`RBI rates: Repo, Reverse Repo, CRR, SLR`,time:`Banking:70m CA:50m`,res:`Study IQ Bank IQ`,link:"https://www.youtube.com/@BankIQbyStudyIQ",practice:`Oliveboard Banking GK Ch 2 + GKToday`,evening:`Write current RBI rates from memory`},
+  {n:57,date:"18 May",full:"2026-05-18",day:"Mon",phase:"Phase 2",week:"W9",type:"study",subj:`Reasoning`,topic:`Double Lineup Puzzle`,time:`R:90m E:30m CA:20m`,res:`Piyush Varshney`,link:"https://www.youtube.com/@reasoningbypiyushvarshney",practice:`2 double lineup sets`,evening:`Set up double grid method`},
+  {n:58,date:"19 May",full:"2026-05-19",day:"Tue",phase:"Phase 2",week:"W9",type:"study",subj:`Quant + English`,topic:`Mixed DI + Para Jumbles`,time:`Q-DI:70m E:50m CA:20m`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`1 Mixed DI + 2 Para Jumbles`,evening:`Find anchor sentence first`},
+  {n:59,date:"20 May",full:"2026-05-20",day:"Wed",phase:"Phase 2",week:"W9",type:"study",subj:`Reasoning + CA`,topic:`Scheduling Puzzle + Input-Output intro`,time:`R:90m CA:40m`,res:`Ankush Lamba`,link:"https://www.youtube.com/@AnkushLamba",practice:`2 scheduling sets + 5 Input-Output`,evening:`Pattern detection method`},
+  {n:60,date:"21 May",full:"2026-05-21",day:"Thu",phase:"Phase 2",week:"W9",type:"study",subj:`Quant + English`,topic:`Number Series — missing & wrong types`,time:`Q:70m E:50m CA:20m`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`25 Number Series + 10 Word Usage`,evening:`List 5 common series patterns`},
+  {n:61,date:"22 May",full:"2026-05-22",day:"Fri",phase:"Phase 2",week:"W9",type:"study",subj:`Reasoning + CA`,topic:`Input-Output machine step patterns`,time:`R:80m CA:50m`,res:`Piyush Varshney`,link:"https://www.youtube.com/@reasoningbypiyushvarshney",practice:`3 Input-Output sets + GKToday`,evening:`Which element shifts each step?`},
+  {n:62,date:"23 May",full:"2026-05-23",day:"Sat",phase:"Phase 2",week:"W9",type:"rest",subj:`—`,topic:`Weekly Rest Day`,time:`—`,res:`—`,link:"—",practice:`—`,evening:`Casual review of puzzle notes (20 min)`},
+  {n:63,date:"24 May",full:"2026-05-24",day:"Sun",phase:"Phase 2",week:"W9",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #1 (60 min timed)`,time:`60m mock + 60m analysis`,res:`Oliveboard`,link:"https://www.oliveboard.in/ibps-po-live-test/",practice:`First PO mock — target 60+/100`,evening:`Detailed section-wise analysis`},
+  {n:64,date:"25 May",full:"2026-05-25",day:"Mon",phase:"Phase 2",week:"W10",type:"study",subj:`Reasoning + English`,topic:`Age Puzzle + Sentence Improvement`,time:`R:80m E:40m CA:20m`,res:`Ankush Lamba`,link:"https://www.youtube.com/@AnkushLamba",practice:`2 age puzzles + 15 Sentence Improvement`,evening:`Note age-puzzle setup approach`},
+  {n:65,date:"26 May",full:"2026-05-26",day:"Tue",phase:"Phase 2",week:"W10",type:"study",subj:`Quant — DI`,topic:`Mixed DI: Table + Pie + Bar`,time:`Q-DI:90m E:20m CA:20m`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`2 Mixed DI sets`,evening:`Each DI set target: under 8 min`},
+  {n:66,date:"27 May",full:"2026-05-27",day:"Wed",phase:"Phase 2",week:"W10",type:"study",subj:`Reasoning + CA`,topic:`Seating: Square/Rectangular arrangement`,time:`R:90m CA:40m`,res:`Piyush Varshney`,link:"https://www.youtube.com/@reasoningbypiyushvarshney",practice:`2 square seating + GKToday`,evening:`Square vs circular facing differences`},
+  {n:67,date:"28 May",full:"2026-05-28",day:"Thu",phase:"Phase 2",week:"W10",type:"study",subj:`Quant + English`,topic:`Data Sufficiency + Phrase Replacement`,time:`Q:70m E:50m CA:20m`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`15 DS + 15 Phrase Replacement Qs`,evening:`2-statement evaluation approach`},
+  {n:68,date:"29 May",full:"2026-05-29",day:"Fri",phase:"Phase 2",week:"W10",type:"mock",subj:`Reasoning`,topic:`PO Prelims Sectional — Reasoning (35 Qs/20 min)`,time:`35m + 30m analysis`,res:`Testbook`,link:"https://testbook.com/ibps-po/free-mock-test",practice:`Target: 25+/35`,evening:`Puzzle types missed?`},
+  {n:69,date:"30 May",full:"2026-05-30",day:"Sat",phase:"Phase 2",week:"W10",type:"rest",subj:`—`,topic:`Weekly Rest Day`,time:`—`,res:`—`,link:"—",practice:`—`,evening:`Read 1 Hindu editorial (20 min)`},
+  {n:70,date:"31 May",full:"2026-05-31",day:"Sun",phase:"Phase 2",week:"W10",type:"study",subj:`Banking GK + CA`,topic:`Types of accounts, NEFT/RTGS/IMPS/UPI`,time:`Banking:70m CA:50m`,res:`Study IQ Bank IQ`,link:"https://www.youtube.com/@BankIQbyStudyIQ",practice:`Oliveboard Banking GK Ch 3 + May CA PDF`,evening:`NEFT vs RTGS vs IMPS differences`},
+  {n:71,date:"01 Jun",full:"2026-06-01",day:"Mon",phase:"Phase 2",week:"W11",type:"study",subj:`Banking + Reasoning`,topic:`SEBI, NABARD, NHB + Puzzles`,time:`Banking:60m R:60m CA:20m`,res:`Study IQ Bank IQ`,link:"https://www.youtube.com/@BankIQbyStudyIQ",practice:`SEBI/NABARD notes + 1 puzzle set`,evening:`SEBI = capital markets regulator`},
+  {n:72,date:"02 Jun",full:"2026-06-02",day:"Tue",phase:"Phase 2",week:"W11",type:"study",subj:`Banking + English`,topic:`RBI Reports & Policies + RC`,time:`Banking:60m E:60m CA:20m`,res:`Study IQ Bank IQ`,link:"https://www.youtube.com/@BankIQbyStudyIQ",practice:`RBI policy notes + 1 banking RC`,evening:`Note monetary policy tools`},
+  {n:73,date:"03 Jun",full:"2026-06-03",day:"Wed",phase:"Phase 2",week:"W11",type:"study",subj:`Quant + Banking`,topic:`Mixed DI + Govt Schemes`,time:`Q-DI:70m Banking:50m CA:20m`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`2 DI sets + Govt Schemes notes`,evening:`List 10 major PM schemes`},
+  {n:74,date:"04 Jun",full:"2026-06-04",day:"Thu",phase:"Phase 2",week:"W11",type:"study",subj:`Reasoning + CA`,topic:`Data Sufficiency + Current Affairs`,time:`R:70m CA:70m`,res:`Piyush Varshney`,link:"https://www.youtube.com/@reasoningbypiyushvarshney",practice:`10 DS + GKToday + news`,evening:`Both statements needed or only one?`},
+  {n:75,date:"05 Jun",full:"2026-06-05",day:"Fri",phase:"Phase 2",week:"W11",type:"study",subj:`Banking + English`,topic:`International Orgs + Para Jumbles`,time:`Banking:60m E:60m CA:20m`,res:`Oliveboard Banking GK`,link:"https://www.oliveboard.in/blog/free-mock-tests/",practice:`Banking quiz + 2 Para Jumbles`,evening:`HQ and purpose of each org`},
+  {n:76,date:"06 Jun",full:"2026-06-06",day:"Sat",phase:"Phase 2",week:"W11",type:"rest",subj:`—`,topic:`Weekly Rest Day`,time:`—`,res:`—`,link:"—",practice:`—`,evening:`Revise Banking notes (30 min)`},
+  {n:77,date:"07 Jun",full:"2026-06-07",day:"Sun",phase:"Phase 2",week:"W11",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #2 (60 min timed)`,time:`60m mock + 60m analysis`,res:`Oliveboard`,link:"https://www.oliveboard.in/ibps-po-live-test/",practice:`Target: improve on Mock 1`,evening:`Note sectional scores`},
+  {n:78,date:"08 Jun",full:"2026-06-08",day:"Mon",phase:"Phase 2",week:"W12",type:"study",subj:`Quant — Speed`,topic:`Speed drills: 50 Simplification in 20 min`,time:`Q:90m CA:30m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`50 Simplification timed`,evening:`Which types took longest?`},
+  {n:79,date:"09 Jun",full:"2026-06-09",day:"Tue",phase:"Phase 2",week:"W12",type:"study",subj:`Reasoning + English`,topic:`Speed: 20 Syllogism in 10 min + Cloze`,time:`R:80m E:40m CA:20m`,res:`Ankush Lamba`,link:"https://www.youtube.com/@AnkushLamba",practice:`20 Syllogism + 2 Cloze timed`,evening:`Qs per minute rate?`},
+  {n:80,date:"10 Jun",full:"2026-06-10",day:"Wed",phase:"Phase 2",week:"W12",type:"study",subj:`Banking + Quant`,topic:`Static GK: Capitals/currencies + DI`,time:`Banking:50m Q-DI:70m CA:20m`,res:`GKToday`,link:"https://www.gktoday.in",practice:`GKToday Static GK + 2 DI sets`,evening:`20 country-capital-currency facts`},
+  {n:81,date:"11 Jun",full:"2026-06-11",day:"Thu",phase:"Phase 2",week:"W12",type:"study",subj:`Reasoning + CA`,topic:`Complex Puzzle: 3-4 attribute variables`,time:`R:90m CA:50m`,res:`Piyush Varshney`,link:"https://www.youtube.com/@reasoningbypiyushvarshney",practice:`3 complex puzzle sets + GKToday`,evening:`Mains-level exposure`},
+  {n:82,date:"12 Jun",full:"2026-06-12",day:"Fri",phase:"Phase 2",week:"W12",type:"mock",subj:`English`,topic:`PO Prelims Sectional — English Only (30 Qs/20 min)`,time:`25m + 25m analysis`,res:`Testbook`,link:"https://testbook.com/ibps-po/free-mock-test",practice:`Target: 20+/30`,evening:`RC or Grammar — where lost marks?`},
+  {n:83,date:"13 Jun",full:"2026-06-13",day:"Sat",phase:"Phase 2",week:"W12",type:"rest",subj:`—`,topic:`Weekly Rest Day`,time:`—`,res:`—`,link:"—",practice:`—`,evening:`Read The Hindu editorial (20 min)`},
+  {n:84,date:"14 Jun",full:"2026-06-14",day:"Sun",phase:"Phase 2",week:"W12",type:"study",subj:`Banking + English`,topic:`Budget terms: GDP, fiscal deficit + Vocab`,time:`Banking:60m E:60m CA:20m`,res:`Study IQ Bank IQ`,link:"https://www.youtube.com/@BankIQbyStudyIQ",practice:`Banking quiz + 20 Vocab Qs`,evening:`Fiscal deficit vs revenue deficit`},
+  {n:85,date:"15 Jun",full:"2026-06-15",day:"Mon",phase:"Phase 2",week:"W13",type:"study",subj:`Quant + Reasoning`,topic:`Caselet DI adv + Scheduling puzzle`,time:`Q-DI:80m R:60m CA:20m`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`2 Caselet DI + 2 Scheduling puzzles`,evening:`Caselet DI target: under 10 min`},
+  {n:86,date:"16 Jun",full:"2026-06-16",day:"Tue",phase:"Phase 2",week:"W13",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #3 (timed)`,time:`60m mock + 60m analysis`,res:`Oliveboard`,link:"https://www.oliveboard.in/ibps-po-live-test/",practice:`Target: 70+/100`,evening:`Weakest topic from this mock?`},
+  {n:87,date:"17 Jun",full:"2026-06-17",day:"Wed",phase:"Phase 2",week:"W13",type:"study",subj:`Weak Area`,topic:`Target weakest topic from Mock 3`,time:`120m focused`,res:`Ankush Lamba`,link:"https://www.youtube.com/@AnkushLamba",practice:`40 Qs on weak topic only`,evening:`Note improvement vs before`},
+  {n:88,date:"18 Jun",full:"2026-06-18",day:"Thu",phase:"Phase 2",week:"W13",type:"study",subj:`Quant + English`,topic:`Problems on Ages + One Word Substitution`,time:`Q:70m E:50m CA:20m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`20 Age + 20 OWS Qs`,evening:`Age problem algebra setup`},
+  {n:89,date:"19 Jun",full:"2026-06-19",day:"Fri",phase:"Phase 2",week:"W13",type:"study",subj:`Reasoning + CA`,topic:`All puzzle types — 4 types rotation`,time:`R:100m CA:40m`,res:`Piyush Varshney`,link:"https://www.youtube.com/@reasoningbypiyushvarshney",practice:`4 puzzle sets + GKToday`,evening:`Max 8 min per puzzle set`},
+  {n:90,date:"20 Jun",full:"2026-06-20",day:"Sat",phase:"Phase 2",week:"W13",type:"rest",subj:`—`,topic:`Weekly Rest Day`,time:`—`,res:`—`,link:"—",practice:`—`,evening:`Revise Banking GK capsule (30 min)`},
+  {n:91,date:"21 Jun",full:"2026-06-21",day:"Sun",phase:"Phase 2",week:"W13",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #4 (timed)`,time:`60m mock + 60m analysis`,res:`Testbook`,link:"https://testbook.com/ibps-po/free-mock-test",practice:`Target: 70+/100`,evening:`Compare all 4 mock scores`},
+  {n:92,date:"22 Jun",full:"2026-06-22",day:"Mon",phase:"Phase 2",week:"W14",type:"study",subj:`Quant + Reasoning`,topic:`Permutation & Combination + Logical Reasoning`,time:`Q:70m R:50m CA:20m`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`15 P&C + 10 Logical Reasoning Qs`,evening:`nPr vs nCr formula difference`},
+  {n:93,date:"23 Jun",full:"2026-06-23",day:"Tue",phase:"Phase 2",week:"W14",type:"study",subj:`Quant + English`,topic:`Probability + RC (banking theme)`,time:`Q:60m E:60m CA:20m`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`15 Probability + 1 banking RC`,evening:`Read RBI article in The Hindu`},
+  {n:94,date:"24 Jun",full:"2026-06-24",day:"Wed",phase:"Phase 2",week:"W14",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #5 (timed)`,time:`60m mock + 60m analysis`,res:`Oliveboard`,link:"https://www.oliveboard.in/ibps-po-live-test/",practice:`Target: 72+/100`,evening:`Time per section — finishing?`},
+  {n:95,date:"25 Jun",full:"2026-06-25",day:"Thu",phase:"Phase 2",week:"W14",type:"revision",subj:`All Subjects`,topic:`Phase 2 Revision — DI + Banking + Puzzles`,time:`120m`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`Revise 30 wrong Qs from mocks`,evening:`Write personal weak topic list`},
+  {n:96,date:"26 Jun",full:"2026-06-26",day:"Fri",phase:"Phase 3",week:"W15",type:"study",subj:`All Subjects`,topic:`Phase 3 kick-off — Revision only. No new topics.`,time:`Q:50m R:50m E:30m CA:30m`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`Reattempt 30 Phase 2 mock errors`,evening:`Write top 5 weak topics`},
+  {n:97,date:"27 Jun",full:"2026-06-27",day:"Sat",phase:"Phase 3",week:"W15",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #6 (timed)`,time:`60m mock + 60m analysis`,res:`Oliveboard`,link:"https://www.oliveboard.in/ibps-po-live-test/",practice:`Target: 75+/100`,evening:`Mark each wrong Q reason`},
+  {n:98,date:"28 Jun",full:"2026-06-28",day:"Sun",phase:"Phase 3",week:"W15",type:"study",subj:`Weak Area`,topic:`Target weakest section from Mock 6`,time:`90m + CA:40m`,res:`Ankush Lamba`,link:"https://www.youtube.com/@AnkushLamba",practice:`30 Qs on weak topic + GKToday`,evening:`Concept gap or speed issue?`},
+  {n:99,date:"29 Jun",full:"2026-06-29",day:"Mon",phase:"Phase 3",week:"W15",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #7 (timed)`,time:`60m mock + 60m analysis`,res:`Testbook`,link:"https://testbook.com/ibps-po/free-mock-test",practice:`Target: match or beat Mock 6`,evening:`Track score trend`},
+  {n:100,date:"30 Jun",full:"2026-06-30",day:"Tue",phase:"Phase 3",week:"W15",type:"study",subj:`Banking + CA`,topic:`Banking revision + July CA start`,time:`Banking:70m CA:70m`,res:`Oliveboard Banking GK`,link:"https://www.oliveboard.in/blog/free-mock-tests/",practice:`Banking revision + GKToday quiz`,evening:`New RBI/SEBI news this week`},
+  {n:101,date:"01 Jul",full:"2026-07-01",day:"Wed",phase:"Phase 3",week:"W15",type:"rest",subj:`—`,topic:`Weekly Rest Day`,time:`—`,res:`—`,link:"—",practice:`—`,evening:`Read 1 Hindu editorial (20 min)`},
+  {n:102,date:"02 Jul",full:"2026-07-02",day:"Thu",phase:"Phase 3",week:"W15",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #8 (timed)`,time:`60m mock + 60m analysis`,res:`Oliveboard`,link:"https://www.oliveboard.in/ibps-po-live-test/",practice:`Target: 75+/100`,evening:`3 mocks this week — review all 3`},
+  {n:103,date:"03 Jul",full:"2026-07-03",day:"Fri",phase:"Phase 3",week:"W16",type:"study",subj:`English + CA`,topic:`English intensive: RC + Para Jumble + Error`,time:`E:90m CA:50m`,res:`The Hindu`,link:"https://www.thehindu.com/opinion/editorial/",practice:`2 RC + 2 Para Jumbles + 20 Error Qs`,evening:`Read 2 Hindu editorials back to back`},
+  {n:104,date:"04 Jul",full:"2026-07-04",day:"Sat",phase:"Phase 3",week:"W16",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #9 (timed)`,time:`60m mock + 60m analysis`,res:`Testbook`,link:"https://testbook.com/ibps-po/free-mock-test",practice:`Target: 77+/100`,evening:`Cut wrong answers — negative marking!`},
+  {n:105,date:"05 Jul",full:"2026-07-05",day:"Sun",phase:"Phase 3",week:"W16",type:"study",subj:`Quant — DI`,topic:`DI speed: 3 sets in 20 min challenge`,time:`Q-DI:90m CA:40m`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`3 DI sets — strict 20 min timer`,evening:`Which DI type is slowest?`},
+  {n:106,date:"06 Jul",full:"2026-07-06",day:"Mon",phase:"Phase 3",week:"W16",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #10 (timed)`,time:`60m mock + 60m analysis`,res:`Oliveboard`,link:"https://www.oliveboard.in/ibps-po-live-test/",practice:`Double digits — target 78+/100`,evening:`Clear score improvement by now`},
+  {n:107,date:"07 Jul",full:"2026-07-07",day:"Tue",phase:"Phase 3",week:"W16",type:"study",subj:`Reasoning`,topic:`Puzzle marathon: 5 sets in 40 min`,time:`R:90m CA:50m`,res:`Piyush Varshney`,link:"https://www.youtube.com/@reasoningbypiyushvarshney",practice:`5 puzzle sets timed + GKToday`,evening:`1 puzzle type to skip in exam?`},
+  {n:108,date:"08 Jul",full:"2026-07-08",day:"Wed",phase:"Phase 3",week:"W16",type:"rest",subj:`—`,topic:`Weekly Rest Day`,time:`—`,res:`—`,link:"—",practice:`—`,evening:`Reread banking notes (20 min)`},
+  {n:109,date:"09 Jul",full:"2026-07-09",day:"Thu",phase:"Phase 3",week:"W16",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #11 (timed)`,time:`60m mock + 60m analysis`,res:`Testbook`,link:"https://testbook.com/ibps-po/free-mock-test",practice:`Target: 78+/100`,evening:`3rd mock of week — stamina!`},
+  {n:110,date:"10 Jul",full:"2026-07-10",day:"Fri",phase:"Phase 3",week:"W17",type:"study",subj:`All Subjects`,topic:`Weak topic intensive: top 2 from 5 mocks`,time:`120m focused`,res:`Adda247`,link:"https://www.youtube.com/@adda247",practice:`40 Qs on weak topics`,evening:`Measure vs first attempt`},
+  {n:111,date:"11 Jul",full:"2026-07-11",day:"Sat",phase:"Phase 3",week:"W17",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #12 (timed)`,time:`60m mock + 60m analysis`,res:`Oliveboard`,link:"https://www.oliveboard.in/ibps-po-live-test/",practice:`Target: 80+/100 — crossing target!`,evening:`First time crossing 80? Celebrate!`},
+  {n:112,date:"12 Jul",full:"2026-07-12",day:"Sun",phase:"Phase 3",week:"W17",type:"study",subj:`Banking + CA`,topic:`CA intensive: last 3 months review`,time:`CA:120m`,res:`Adda247 Monthly CA PDF`,link:"https://www.adda247.com/monthly-current-affairs-pdf/",practice:`Read May+Jun+Jul CA PDF`,evening:`Appointments, awards, summits`},
+  {n:113,date:"13 Jul",full:"2026-07-13",day:"Mon",phase:"Phase 3",week:"W17",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #13 (timed)`,time:`60m mock + 60m analysis`,res:`Testbook`,link:"https://testbook.com/ibps-po/free-mock-test",practice:`Target: 78+/100`,evening:`Stable or fluctuating score?`},
+  {n:114,date:"14 Jul",full:"2026-07-14",day:"Tue",phase:"Phase 3",week:"W17",type:"study",subj:`English + Reasoning`,topic:`Speed accuracy drills — all types`,time:`E:70m R:70m CA:20m`,res:`The Hindu`,link:"https://www.thehindu.com/opinion/editorial/",practice:`25 English + 20 Reasoning timed`,evening:`Track accuracy % separately`},
+  {n:115,date:"15 Jul",full:"2026-07-15",day:"Wed",phase:"Phase 3",week:"W17",type:"rest",subj:`—`,topic:`Rest Day — mandatory, protect energy`,time:`—`,res:`—`,link:"—",practice:`—`,evening:`No study — rest completely`},
+  {n:116,date:"16 Jul",full:"2026-07-16",day:"Thu",phase:"Phase 3",week:"W17",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #14 (timed)`,time:`60m mock + 60m analysis`,res:`Oliveboard`,link:"https://www.oliveboard.in/ibps-po-live-test/",practice:`Target: 80+/100`,evening:`Average score across 14 mocks?`},
+  {n:117,date:"17 Jul",full:"2026-07-17",day:"Fri",phase:"Phase 3",week:"W18",type:"study",subj:`All Subjects`,topic:`Speed revision: all formula sheets`,time:`90m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`Write all formulas from memory`,evening:`Fill formula gaps`},
+  {n:118,date:"18 Jul",full:"2026-07-18",day:"Sat",phase:"Phase 3",week:"W18",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #15 (strict)`,time:`60m + 45m analysis`,res:`Oliveboard`,link:"https://www.oliveboard.in/ibps-po-live-test/",practice:`Phone away, timer, silent room`,evening:`Track section time splits`},
+  {n:119,date:"19 Jul",full:"2026-07-19",day:"Sun",phase:"Phase 3",week:"W18",type:"study",subj:`Banking + CA`,topic:`Final Banking GK + Last 6 weeks CA`,time:`Banking:60m CA:80m`,res:`Oliveboard Banking GK`,link:"https://www.oliveboard.in/blog/free-mock-tests/",practice:`Banking + CA final quiz + GKToday`,evening:`Major events last 2 weeks`},
+  {n:120,date:"20 Jul",full:"2026-07-20",day:"Mon",phase:"Phase 3",week:"W18",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #16 (strict)`,time:`60m + 45m analysis`,res:`Testbook`,link:"https://testbook.com/ibps-po/free-mock-test",practice:`Target: 82+/100`,evening:`Negative marking costing marks?`},
+  {n:121,date:"21 Jul",full:"2026-07-21",day:"Tue",phase:"Phase 3",week:"W18",type:"study",subj:`Weak Area`,topic:`Final weak topic blast — last chance`,time:`90m`,res:`Ankush Lamba`,link:"https://www.youtube.com/@AnkushLamba",practice:`30 Qs on 1-2 weakest topics`,evening:`Accept strengths — maximise in exam`},
+  {n:122,date:"22 Jul",full:"2026-07-22",day:"Wed",phase:"Phase 3",week:"W18",type:"rest",subj:`—`,topic:`Scheduled Rest Day — mandatory`,time:`—`,res:`—`,link:"—",practice:`—`,evening:`Walk, eat well, sleep 8 hrs`},
+  {n:123,date:"23 Jul",full:"2026-07-23",day:"Thu",phase:"Phase 3",week:"W18",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #17 (strict)`,time:`60m + 45m analysis`,res:`Oliveboard`,link:"https://www.oliveboard.in/ibps-po-live-test/",practice:`Target: 82+/100`,evening:`Safe attempts strategy`},
+  {n:124,date:"24 Jul",full:"2026-07-24",day:"Fri",phase:"Phase 3",week:"W19",type:"revision",subj:`All Subjects`,topic:`Revision: Quant formulas + DI patterns`,time:`90m`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`Skim 2 DI sets + 20 Quant Qs`,evening:`No new topics from today`},
+  {n:125,date:"25 Jul",full:"2026-07-25",day:"Sat",phase:"Phase 3",week:"W19",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #18`,time:`60m + 40m analysis`,res:`Testbook`,link:"https://testbook.com/ibps-po/free-mock-test",practice:`Target: 83+/100`,evening:`Trust your preparation`},
+  {n:126,date:"26 Jul",full:"2026-07-26",day:"Sun",phase:"Phase 3",week:"W19",type:"revision",subj:`Reasoning`,topic:`Revision: all puzzle types + syllogism`,time:`90m`,res:`Ankush Lamba`,link:"https://www.youtube.com/@AnkushLamba",practice:`3 puzzle sets (strong types)`,evening:`Focus on strong areas`},
+  {n:127,date:"27 Jul",full:"2026-07-27",day:"Mon",phase:"Phase 3",week:"W19",type:"revision",subj:`English + CA`,topic:`English revision + last month CA`,time:`E:60m CA:80m`,res:`The Hindu`,link:"https://www.thehindu.com/opinion/editorial/",practice:`1 RC + 20 CA Qs + GKToday`,evening:`This week Hindu editorials`},
+  {n:128,date:"28 Jul",full:"2026-07-28",day:"Tue",phase:"Phase 3",week:"W19",type:"mock",subj:`All Subjects`,topic:`IBPS PO Full Prelims Mock #19 (strict sim)`,time:`60m + 40m analysis`,res:`Oliveboard`,link:"https://www.oliveboard.in/ibps-po-live-test/",practice:`Target: 83+/100`,evening:`Best attempt strategy noted`},
+  {n:129,date:"29 Jul",full:"2026-07-29",day:"Wed",phase:"Phase 3",week:"W19",type:"rest",subj:`—`,topic:`Rest Day — last weekend before exam`,time:`—`,res:`—`,link:"—",practice:`—`,evening:`Sleep 8 hrs, light walk, eat well`},
+  {n:130,date:"30 Jul",full:"2026-07-30",day:"Thu",phase:"Phase 3",week:"W19",type:"revision",subj:`Banking + CA`,topic:`Final Banking + CA — last pass`,time:`Banking:60m CA:80m`,res:`Oliveboard Banking GK`,link:"https://www.oliveboard.in/blog/free-mock-tests/",practice:`Banking final quiz + July CA`,evening:`RBI rates, appointments`},
+  {n:131,date:"31 Jul",full:"2026-07-31",day:"Fri",phase:"Phase 3",week:"W20",type:"revision",subj:`All Subjects`,topic:`Last day — light touch only. Trust yourself.`,time:`60m max`,res:`Abhinay Maths`,link:"https://www.youtube.com/@AbhinayMaths",practice:`Formula sheet skim only`,evening:`Sleep by 10 PM. Eat well. Lay out docs.`},
+  {n:132,date:"01 Aug",full:"2026-08-01",day:"Sat",phase:"Phase 3",week:"W20",type:"exam",subj:`—`,topic:`IBPS PO PRELIMS EXAM DAY — You've got this!`,time:`Exam day`,res:`—`,link:"—",practice:`Light breakfast. Arrive early.`,evening:`Celebrate tonight — whatever the result!`},
+];
+const EXAM  = new Date('2026-08-01');
+const CGL   = new Date('2026-05-01');
+const START = new Date('2026-03-23');
+
+// ── STORAGE ───────────────────────────────────────────────────────
+const SK = 'bpo26v2';
+let DB = {};
+try { DB = JSON.parse(localStorage.getItem(SK) || '{}'); } catch(e) {}
+function save() {
+  try { localStorage.setItem(SK, JSON.stringify(DB)); } catch(e) {}
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('show'), 1600);
+}
+function get(key) { return DB[key] || {}; }
+function set(key, field, val) { if (!DB[key]) DB[key] = {}; DB[key][field] = val; save(); }
+
+// ── HELPERS ───────────────────────────────────────────────────────
+const now = new Date(); now.setHours(0,0,0,0);
+function todayISO() { return now.toISOString().slice(0,10); }
+function dayIdx() { return Math.max(0, Math.min(Math.floor((now - START) / 86400000), DAYS.length - 1)); }
+function daysLeft(d) { return Math.max(0, Math.ceil((d - now) / 86400000)); }
+
+function badge(t) {
+  const m = {study:'bs Study',mock:'bm Mock',rest:'br Rest',revision:'bv Revision',exam:'be Exam'};
+  const cls = (m[t] || 'bs Study').split(' ');
+  return `<span class="badge ${cls[0]}">${cls[1]}</span>`;
+}
+function phClass(p) { return p.includes('1') ? 'p1' : p.includes('2') ? 'p2' : 'p3'; }
+function phColor(p) { return p.includes('1') ? 'var(--g)' : p.includes('2') ? 'var(--b)' : 'var(--a)'; }
+
+// ── NAV ───────────────────────────────────────────────────────────
+document.getElementById('nav-tabs').addEventListener('click', function(e) {
+  const btn = e.target.closest('.ntab');
+  if (!btn) return;
+  const pg = btn.dataset.page;
+  document.querySelectorAll('.ntab').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('page-' + pg).classList.add('on');
+  const builders = {tracker: buildTracker, sleep: buildSleep, dashboard: buildDashboard};
+  if (builders[pg]) builders[pg]();
+});
+
+// ── COUNTDOWN ─────────────────────────────────────────────────────
+function updateCountdown() {
+  const d = daysLeft(EXAM);
+  document.getElementById('countdown').textContent = d > 0 ? d + 'd to PO Exam' : '🏆 Exam Day!';
+}
+updateCountdown();
+
+// ── STATS HELPERS ─────────────────────────────────────────────────
+function getStudiedDays() { return Object.values(DB).filter(r => r.studied === 'Y').length; }
+function getTotalHrs()    { return Object.values(DB).filter(r=>r.studied==='Y').reduce((a,r) => a + parseFloat(r.hrs||0), 0); }
+function getMockScores()  { return Object.values(DB).map(r => parseFloat(r.mock||0)).filter(n => n > 0); }
+function getStreak() {
+  let s = 0;
+  for (let i = 0; i < 200; i++) {
+    const d = new Date(now); d.setDate(d.getDate() - i);
+    const k = d.toISOString().slice(0,10);
+    if (DB[k] && DB[k].studied === 'Y') s++;
+    else if (i > 0) break;
+  }
+  return s;
+}
+function getSleepHrs() {
+  return Object.entries(DB).filter(([k]) => k.startsWith('s_')).map(([,v]) => parseFloat(v.hrs||0)).filter(n=>n>0);
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────────────
+function buildDashboard() {
+  const studied = getStudiedDays(), hrs = getTotalHrs(), scores = getMockScores();
+  const streak = getStreak(), idx = dayIdx(), sleepHrs = getSleepHrs();
+  const avgSleep = sleepHrs.length ? (sleepHrs.reduce((a,b)=>a+b,0)/sleepHrs.length).toFixed(1) : 0;
+  const goodSleep = sleepHrs.filter(h=>h>=7).length;
+  const subjs = [
+    {n:'Quantitative Aptitude',t:80,k:'q',c:'var(--g)'},
+    {n:'Reasoning Ability',t:60,k:'r',c:'var(--b)'},
+    {n:'English Language',t:40,k:'e',c:'var(--a)'},
+    {n:'Current Affairs / GK',t:30,k:'ca',c:'var(--p)'},
+    {n:'Banking Awareness',t:30,k:'bk',c:'var(--r)'},
+  ];
+  const loggedSubj = k => Object.values(DB).reduce((a,r) => a + parseFloat(r[k]||0), 0);
+
+  const phases = [
+    {n:'Phase 1',s:new Date('2026-03-23'),e:new Date('2026-04-30'),goal:'Foundation + CGL overlap'},
+    {n:'Phase 2',s:new Date('2026-05-01'),e:new Date('2026-06-25'),goal:'PO-specific build-up'},
+    {n:'Phase 3',s:new Date('2026-06-26'),e:new Date('2026-08-01'),goal:'Mock & Revise only'},
+  ];
+
+  const milestones = [
+    {n:'CGL Tier 1 Exam',date:'May 1, 2026',d:CGL},
+    {n:'IBPS PO Notification',date:'~Jun 2026',d:new Date('2026-06-01')},
+    {n:'IBPS PO Prelims',date:'~Aug 1, 2026',d:EXAM},
+    {n:'SBI PO Prelims',date:'~Aug 15, 2026',d:new Date('2026-08-15')},
+  ];
+
+  document.getElementById('page-dashboard').innerHTML = `
+    <div class="pg-title">Dashboard</div>
+    <div class="pg-sub">Live overview — updates as you fill Tracker & Sleep tabs</div>
+
+    <div class="stats">
+      <div class="sc g"><div class="sc-lbl">Days Studied</div><div class="sc-val">${studied}</div><div class="sc-hint">/ 132 days</div></div>
+      <div class="sc b"><div class="sc-lbl">Streak 🔥</div><div class="sc-val">${streak}</div><div class="sc-hint">consecutive days</div></div>
+      <div class="sc a"><div class="sc-lbl">Days to PO Exam</div><div class="sc-val">${daysLeft(EXAM)}</div><div class="sc-hint">Aug 1, 2026</div></div>
+      <div class="sc p"><div class="sc-lbl">Journey Done</div><div class="sc-val">${Math.round(idx/DAYS.length*100)}%</div><div class="sc-hint">Day ${idx} of ${DAYS.length}</div></div>
+      <div class="sc g"><div class="sc-lbl">Total Hrs</div><div class="sc-val">${hrs.toFixed(0)}</div><div class="sc-hint">target: 280 hrs</div></div>
+      <div class="sc r"><div class="sc-lbl">Days to CGL</div><div class="sc-val">${daysLeft(CGL)}</div><div class="sc-hint">May 1, 2026</div></div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">📚 Subject Progress</div>
+        ${subjs.map(s => { const l = loggedSubj(s.k), pct = Math.min(100, Math.round(l/s.t*100));
+          return `<div class="prog-row"><div class="prog-lbl" style="font-size:12px">${s.n}</div><div class="prog-track"><div class="prog-fill" style="width:${pct}%;background:${s.c}"></div></div><div class="prog-pct">${pct}%</div></div>`; }).join('')}
+      </div>
+      <div class="card">
+        <div class="card-title">🗓 Phase Status</div>
+        ${phases.map(p => {
+          const done = now > p.e, active = !done && now >= p.s;
+          const st = done ? '✅ Complete' : active ? '🔄 Active' : '⏳ Upcoming';
+          const cl = done ? 'var(--g)' : active ? 'var(--a)' : 'var(--faint)';
+          const pc = phClass(p.n);
+          return `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)"><span style="font-weight:600;color:${phColor(p.n)}">${p.n}</span><span style="font-size:12px;font-weight:600;color:${cl}">${st}</span></div>`;
+        }).join('')}
+        <div style="padding:10px 0;font-size:12px;color:var(--muted)">${phases.find(p=>now>=p.s&&now<=p.e)?.goal||'All phases complete'}</div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">🎯 Mock Performance</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="text-align:center;padding:12px;background:var(--surface2);border-radius:8px"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Mocks Taken</div><div style="font-size:26px;font-weight:800;color:var(--b);font-family:var(--mono)">${scores.length}</div></div>
+          <div style="text-align:center;padding:12px;background:var(--surface2);border-radius:8px"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Best Score</div><div style="font-size:26px;font-weight:800;color:var(--g);font-family:var(--mono)">${scores.length ? Math.max(...scores) : 0}</div></div>
+          <div style="text-align:center;padding:12px;background:var(--surface2);border-radius:8px"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Avg Score</div><div style="font-size:26px;font-weight:800;color:var(--a);font-family:var(--mono)">${scores.length ? (scores.reduce((a,b)=>a+b)/scores.length).toFixed(1) : 0}</div></div>
+          <div style="text-align:center;padding:12px;background:var(--surface2);border-radius:8px"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Target</div><div style="font-size:26px;font-weight:800;color:var(--p);font-family:var(--mono)">80</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">😴 Sleep Health</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="text-align:center;padding:12px;background:var(--surface2);border-radius:8px"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Avg Sleep Hrs</div><div style="font-size:26px;font-weight:800;color:var(--p);font-family:var(--mono)">${avgSleep}</div></div>
+          <div style="text-align:center;padding:12px;background:var(--surface2);border-radius:8px"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Days ≥ 7 hrs</div><div style="font-size:26px;font-weight:800;color:var(--g);font-family:var(--mono)">${goodSleep}</div></div>
+          <div style="text-align:center;padding:12px;background:var(--surface2);border-radius:8px"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Days &lt; 6 hrs</div><div style="font-size:26px;font-weight:800;color:var(--r);font-family:var(--mono)">${sleepHrs.filter(h=>h<6).length}</div></div>
+          <div style="text-align:center;padding:12px;background:var(--surface2);border-radius:8px"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Sleep Score</div><div style="font-size:26px;font-weight:800;color:var(--b);font-family:var(--mono)">${sleepHrs.length ? (goodSleep/sleepHrs.length*10).toFixed(1) : 0}/10</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚡ Milestone Tracker</div>
+      <div class="ms-grid">
+        ${milestones.map(m => {
+          const done = now > m.d, dl = daysLeft(m.d);
+          const cl = done ? 'var(--g)' : dl < 14 ? 'var(--a)' : 'var(--b)';
+          const bc = done ? 'var(--gm)' : dl < 14 ? 'var(--am)' : 'var(--border)';
+          return `<div class="ms-card" style="border-color:${bc}"><div class="ms-name">${m.n}</div><div class="ms-date">${m.date}</div><div class="ms-days" style="color:${cl}">${done ? '✅ Done' : dl > 0 ? dl + ' days away' : '📝 Today!'}</div></div>`;
+        }).join('')}
+      </div>
+    </div>`;
+}
+
+// ── TODAY PAGE ────────────────────────────────────────────────────
+function buildToday() {
+  const idx = dayIdx(), d = DAYS[idx];
+  if (!d) { document.getElementById('page-today').innerHTML = '<p style="color:var(--muted);padding:40px">No plan for today.</p>'; return; }
+  const dateStr = now.toLocaleDateString('en-IN', {weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('page-today').innerHTML = `
+    <div class="pg-title">Today's Plan</div>
+    <div class="pg-sub">${dateStr}</div>
+    <div class="today-hero">
+      <div class="today-badge">📅 Day ${d.n} of ${DAYS.length}</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:6px">${d.phase} · ${d.week} · ${d.day}, ${d.date}</div>
+      <div style="font-size:20px;font-weight:700;line-height:1.3;margin-bottom:12px;letter-spacing:-.3px">${d.topic}</div>
+      <div class="today-meta-row">
+        ${badge(d.type)}
+        <div class="pill">🎓 <span>${d.subj}</span></div>
+        <div class="pill">⏱ <span>${d.time}</span></div>
+        ${d.link && d.link !== '—' ? `<div class="pill">📺 <a href="${d.link}" target="_blank" style="color:var(--b)">${d.res}</a></div>` : ''}
+      </div>
+      <div class="task-grid">
+        <div class="task-box"><div class="task-lbl">🎯 Practice Target</div><div class="task-txt">${d.practice}</div></div>
+        <div class="task-box"><div class="task-lbl">🌙 Evening Revision</div><div class="task-txt">${d.evening}</div></div>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">⏳ Progress Snapshot</div>
+        <div class="prog-row"><div class="prog-lbl">Journey complete</div><div class="prog-track"><div class="prog-fill" style="width:${Math.round(idx/DAYS.length*100)}%"></div></div><div class="prog-pct">${Math.round(idx/DAYS.length*100)}%</div></div>
+        <div class="prog-row"><div class="prog-lbl">Days studied</div><div class="prog-track"><div class="prog-fill" style="width:${Math.round(getStudiedDays()/132*100)}%;background:var(--b)"></div></div><div class="prog-pct">${getStudiedDays()}</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">📅 Coming Up Next</div>
+        ${DAYS.slice(idx+1, idx+4).map(nd => `<div style="padding:7px 0;border-bottom:1px solid var(--border);font-size:12px"><span style="color:var(--muted)">Day ${nd.n} (${nd.date})</span><br>${nd.topic.slice(0,55)}${nd.topic.length>55?'...':''}</div>`).join('')}
+      </div>
+    </div>`;
+}
+
+// ── PLAN PAGE ─────────────────────────────────────────────────────
+let planFilter = 'all', planSearch = '';
+function buildPlan() {
+  const idx = dayIdx();
+  const filtered = DAYS.filter(d =>
+    (planFilter === 'all' || d.phase === planFilter) &&
+    (!planSearch || d.topic.toLowerCase().includes(planSearch) || d.subj.toLowerCase().includes(planSearch) || d.week.toLowerCase().includes(planSearch))
+  );
+  const rows = filtered.map(d => {
+    const isToday = d.n - 1 === idx;
+    const isDone  = DB[d.full] && DB[d.full].studied === 'Y';
+    const pc = phClass(d.phase);
+    return `
+      <div class="day-row ${pc} ${isToday?'is-today':''} ${isDone?'is-done':''}" data-n="${d.n}">
+        <div class="dnum">#${d.n}</div>
+        <div><div class="ddate">${d.date}</div><div class="dday">${d.day}</div></div>
+        <div class="dday">${d.week}</div>
+        <div>${badge(d.type)}</div>
+        <div><div class="dtopic">${d.topic}</div><div class="dsubj">${d.subj}</div></div>
+        <button class="done-btn ${isDone?'done':''}" data-full="${d.full}" data-n="${d.n}">${isDone?'✓':'○'}</button>
+      </div>
+      <div class="detail-panel" id="dp-${d.n}">
+        <div class="dp-block"><div class="dp-lbl">⏱ Time Allocation</div><div class="dp-val">${d.time}</div></div>
+        <div class="dp-block"><div class="dp-lbl">📺 Resource</div><div class="dp-val">${d.link&&d.link!=='—'?`<a href="${d.link}" target="_blank" class="dp-link">${d.res} ↗</a>`:d.res}</div></div>
+        <div class="dp-block"><div class="dp-lbl">🎯 Practice Target</div><div class="dp-val">${d.practice}</div></div>
+        <div class="dp-block"><div class="dp-lbl">🌙 Evening Revision</div><div class="dp-val">${d.evening}</div></div>
+      </div>`;
+  }).join('');
+  document.getElementById('plan-list').innerHTML = rows || '<div style="padding:40px;text-align:center;color:var(--muted)">No days match your search.</div>';
+}
+
+function initPlan() {
+  document.getElementById('page-plan').innerHTML = `
+    <div class="pg-title">140-Day Study Plan</div>
+    <div class="pg-sub">Mar 23 → Aug 1, 2026 · Click any day to expand · ✓ to mark done</div>
+    <div class="search-row">
+      <input class="search-in" id="plan-search" placeholder="Search topic, subject, week..." type="text">
+    </div>
+    <div class="ftabs">
+      <button class="ftab fall on" data-filter="all">All Days</button>
+      <button class="ftab fg"      data-filter="Phase 1">🟢 Phase 1</button>
+      <button class="ftab fb"      data-filter="Phase 2">🔵 Phase 2</button>
+      <button class="ftab fa"      data-filter="Phase 3">🟠 Phase 3</button>
+    </div>
+    <div id="plan-list"></div>`;
+
+  document.getElementById('plan-search').addEventListener('input', function() {
+    planSearch = this.value.toLowerCase();
+    buildPlan();
+  });
+
+  document.querySelector('.ftabs').addEventListener('click', function(e) {
+    const btn = e.target.closest('.ftab');
+    if (!btn) return;
+    document.querySelectorAll('.ftab').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    planFilter = btn.dataset.filter;
+    buildPlan();
+  });
+
+  document.getElementById('plan-list').addEventListener('click', function(e) {
+    // Done button
+    const doneBtn = e.target.closest('.done-btn');
+    if (doneBtn) {
+      e.stopPropagation();
+      const full = doneBtn.dataset.full, n = doneBtn.dataset.n;
+      if (!DB[full]) DB[full] = {};
+      DB[full].studied = DB[full].studied === 'Y' ? 'N' : 'Y';
+      save();
+      buildPlan();
+      buildDashboard();
+      return;
+    }
+    // Row expand
+    const row = e.target.closest('.day-row');
+    if (row) {
+      const n = row.dataset.n;
+      const panel = document.getElementById('dp-' + n);
+      if (panel) panel.classList.toggle('open');
+    }
+  });
+
+  buildPlan();
+}
+
+// ── WEEK PLAN ─────────────────────────────────────────────────────
+function initWeeks() {
+  const weeks = [
+    {ph:'p1',pn:'Phase 1',w:'W1–W2',dates:'Mar 23 – Apr 5',topic:'Number System, %, Ratio, Avg, SI/CI',detail:'Core Quant topics. Watch Abhinay Maths. Solve 30 Qs/day after concept video.',tags:['Quant','Number Series','Coding-Decoding']},
+    {ph:'p1',pn:'Phase 1',w:'W3–W4',dates:'Apr 6 – Apr 19',topic:'Profit/Loss, Time & Work, Direction, Blood Relations',detail:'Start English: Error spotting + RC (10 min/day The Hindu). Begin GK capsule.',tags:['Quant','English','GK']},
+    {ph:'p1',pn:'Phase 1',w:'W5–W6',dates:'Apr 20 – Apr 30',topic:'Mensuration, Geometry + CGL Mock Mode + CGL EXAM',detail:'1 CGL Tier 1 full mock/week. Analyse deeply. Start Banking Awareness intro.',tags:['Mocks','CGL Exam','Banking Intro']},
+    {ph:'p2',pn:'Phase 2',w:'W7–W8',dates:'May 1 – May 14',topic:"Data Interpretation — PO's biggest section",detail:'Tables, bar graphs, line charts, pie charts, caselet DI. Do 2 DI sets/day.',tags:['DI','Quadratic Eq','Floor Puzzles']},
+    {ph:'p2',pn:'Phase 2',w:'W9–W10',dates:'May 15 – May 28',topic:'High-level Puzzles + Input-Output + Seating Arrangement',detail:'PO Reasoning complex puzzles. 1 puzzle set/day min. Cloze + Para jumbles.',tags:['Reasoning','English','DI continues']},
+    {ph:'p2',pn:'Phase 2',w:'W11–W12',dates:'May 29 – Jun 11',topic:'Banking Awareness foundation + Speed building',detail:'RBI, SEBI, types of loans, NEFT/RTGS/IMPS. Oliveboard free eBooks.',tags:['Banking GK','Static GK','Speed Drills']},
+    {ph:'p2',pn:'Phase 2',w:'W13–W14',dates:'Jun 12 – Jun 25',topic:'Full-length PO prelim mocks — 2 per week',detail:'Time management: 20 min each section. Deep score analysis after every mock.',tags:['Full Mocks','Weak Area','P&C Probability']},
+    {ph:'p3',pn:'Phase 3',w:'W15–W17',dates:'Jun 26 – Jul 16',topic:'3–4 full mocks/week + deep error analysis',detail:'No new topics. Target weakest 2 areas each week. Current Affairs daily.',tags:['Full Mocks','Revision','Current Affairs']},
+    {ph:'p3',pn:'Phase 3',w:'W18–W20',dates:'Jul 17 – Aug 1',topic:'Final sprint — speed, accuracy + EXAM',detail:'Real exam conditions. Last 10 days: revision sheets only + 1 mock/2 days.',tags:['Speed Drills','Final Revision','PO Exam']},
+  ];
+  document.getElementById('page-weeks').innerHTML = `
+    <div class="pg-title">Week-by-Week Plan</div>
+    <div class="pg-sub">20 weeks from Mar 23 to Aug 1, 2026</div>
+    <div class="wk-cards">
+      ${weeks.map(w => `
+        <div class="wk-card">
+          <div><div class="wk-phase ${w.ph}">${w.pn}</div><div class="wk-dates">${w.w}</div><div class="wk-dates">${w.dates}</div></div>
+          <div><div class="wk-topic">${w.topic}</div><div class="wk-detail">${w.detail}</div><div class="tags">${w.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div>
+        </div>`).join('')}
+    </div>`;
+}
+
+// ── SYLLABUS ──────────────────────────────────────────────────────
+function initSyllabus() {
+  const sections = [
+    {title:'🟣 Quantitative Aptitude (Common to Both)',color:'var(--p)',topics:[
+      {t:'Number System & Simplification',d:'BODMAS, LCM & HCF, divisibility rules, surds & indices',cgl:'✅ Tier 1 & 2',po:'✅ Prelims & Mains',p:'hi',se:true},
+      {t:'Percentage, Ratio & Proportion',d:'% calculations, ratio comparisons, proportion problems',cgl:'✅ Tier 1 & 2',po:'✅ Prelims & Mains',p:'hi'},
+      {t:'Average, Mixture & Alligation',d:'Mean calculations, mixing problems with different ratios',cgl:'✅ Tier 1 & 2',po:'✅ Prelims & Mains',p:'hi'},
+      {t:'Simple & Compound Interest',d:'SI/CI formulas, half-yearly/quarterly compounding',cgl:'✅ Tier 1 & 2',po:'✅ Prelims & Mains',p:'hi'},
+      {t:'Profit, Loss & Discount',d:'CP/SP, profit%, discount%, successive discounts',cgl:'✅ Tier 1 & 2',po:'✅ Prelims & Mains',p:'hi'},
+      {t:'Time & Work / Pipes & Cisterns',d:'Work efficiency, combined work, filling/emptying tanks',cgl:'✅ Tier 1 & 2',po:'✅ Prelims & Mains',p:'hi'},
+      {t:'Time Speed Distance / Boats',d:'Relative speed, trains, upstream/downstream',cgl:'✅ Tier 1 & 2',po:'✅ Prelims & Mains',p:'hi'},
+      {t:'Data Interpretation (DI)',d:'Tables, Bar, Line, Pie, Caselet, Radar, Mixed DI',cgl:'✅ Tier 1 & 2',po:'✅ Prelims & Mains',p:'hi',se:true},
+      {t:'Number Series',d:'Missing/wrong number, arithmetic/geometric patterns',cgl:'✅ Tier 1',po:'✅ Prelims & Mains',p:'hi',se:true},
+      {t:'Quadratic Equations',d:'ax²+bx+c=0, factorisation, sign rules',cgl:'✅ Tier 1 & 2',po:'✅ Mains',p:'md'},
+      {t:'Geometry & Mensuration',d:'2D & 3D shapes — area, volume, triangles, circles',cgl:'✅ Tier 1 & 2',po:'✅ Mains',p:'md'},
+      {t:'Permutation, Combination & Probability',d:'Arrangements, selections, basic probability',cgl:'✅ Tier 1 & 2',po:'✅ Prelims & Mains',p:'md'},
+    ]},
+    {title:'🟣 Reasoning Ability (Common to Both)',color:'var(--p)',topics:[
+      {t:'Puzzles & Seating Arrangement',d:'Floor, Box, Scheduling, Circular, Linear, Square seating',cgl:'✅ Tier 1',po:'✅ Prelims & Mains',p:'hi',se:true},
+      {t:'Coding-Decoding',d:'Letter/number coding, Chinese coding, pattern decoding',cgl:'✅ Tier 1 & 2',po:'✅ Prelims & Mains',p:'hi',se:true},
+      {t:'Syllogism',d:'Venn diagrams, basic & reverse syllogism',cgl:'✅ Tier 1 & 2',po:'✅ Prelims & Mains',p:'hi'},
+      {t:'Inequalities',d:'Direct and coded inequality chains',cgl:'✅ Tier 1',po:'✅ Prelims & Mains',p:'hi'},
+      {t:'Blood Relations',d:'Family tree — normal and coded',cgl:'✅ Tier 1',po:'✅ Prelims & Mains',p:'hi'},
+      {t:'Direction & Distance',d:'Navigation, shadow-based, final position/distance',cgl:'✅ Tier 1',po:'✅ Prelims & Mains',p:'hi'},
+      {t:'Number & Letter Series',d:'Arithmetic/geometric/mixed patterns',cgl:'✅ Tier 1 & 2',po:'✅ Prelims & Mains',p:'hi'},
+      {t:'Input-Output (Machine)',d:'Step-by-step machine transformation patterns',cgl:'🟢 Tier 2',po:'✅ Prelims & Mains',p:'md'},
+      {t:'Statement & Conclusion',d:'Logical reasoning, valid conclusions, implicit assumptions',cgl:'✅ Tier 1 & 2',po:'✅ Mains',p:'md'},
+      {t:'Data Sufficiency',d:'Determine if statements are sufficient to answer',cgl:'🟢 Tier 2',po:'✅ Prelims & Mains',p:'md'},
+    ]},
+    {title:'🟣 English Language (Common to Both)',color:'var(--p)',topics:[
+      {t:'Reading Comprehension',d:'Passage Qs — inference, tone, vocab; PO: banking/economy',cgl:'✅ Tier 1 & 2',po:'✅ Prelims & Mains',p:'hi'},
+      {t:'Cloze Test',d:'Fill blanks in passage — grammar + contextual vocabulary',cgl:'✅ Tier 1 & 2',po:'✅ Prelims & Mains',p:'hi'},
+      {t:'Error Spotting',d:'Grammatical errors — tenses, subject-verb, prepositions',cgl:'✅ Tier 1 & 2',po:'✅ Prelims & Mains',p:'hi'},
+      {t:'Para Jumbles',d:'Rearrange jumbled sentences into coherent paragraph',cgl:'✅ Tier 2',po:'✅ Prelims & Mains',p:'hi'},
+      {t:'Fill in the Blanks',d:'Single & double blanks — prepositions, conjunctions',cgl:'✅ Tier 1 & 2',po:'✅ Prelims & Mains',p:'hi'},
+      {t:'Vocabulary',d:'Synonyms, antonyms, idioms, one-word substitution',cgl:'✅ Tier 1 & 2',po:'✅ Prelims & Mains',p:'hi'},
+      {t:'Sentence Improvement',d:'Identify and correct incorrect parts of sentences',cgl:'✅ Tier 2',po:'✅ Prelims & Mains',p:'md'},
+    ]},
+    {title:'🌍 General Awareness & Banking',color:'var(--a)',topics:[
+      {t:'Current Affairs',d:'Monthly events — politics, economy, sports, awards, summits',cgl:'✅ Tier 1 & 2',po:'✅ Prelims & Mains',p:'hi'},
+      {t:'Banking & Financial Awareness',d:'RBI policies, repo rate, CRR/SLR, NEFT/RTGS, NPA',cgl:'🟢 Light',po:'✅ Mains (heavy)',p:'hi'},
+      {t:'Static GK',d:'Capitals, currencies, national parks, important days',cgl:'✅ Tier 1 & 2',po:'✅ Mains',p:'md'},
+      {t:'Government Schemes & Budget',d:'PM schemes, GDP, fiscal deficit, economic survey',cgl:'✅ Tier 1',po:'✅ Mains',p:'md'},
+      {t:'Computer Knowledge',d:'Basics, OS, MS Office, networking, cyber security',cgl:'✅ CGL Tier 2',po:'✅ PO Mains',p:'md',se:true},
+    ]},
+    {title:'🔵 PO-Only Topics (Mains)',color:'var(--b)',topics:[
+      {t:'Mixed DI & Data Analysis',d:'Complex multi-step DI — heaviest Mains section (35 Qs/50 Marks)',cgl:'—',po:'✅ Mains',p:'hi',se:true},
+      {t:'Advanced Reasoning (Mains)',d:'Double lineup, scheduling puzzles — 50 min in exam (40 Qs/60 Marks)',cgl:'—',po:'✅ Mains',p:'hi'},
+      {t:'Essay Writing',d:'Banking/economy/social issues. Practice 2 essays/week from June',cgl:'—',po:'✅ Mains Descriptive',p:'hi'},
+      {t:'Letter Writing',d:'Formal/informal letters. Learn standard formats.',cgl:'—',po:'✅ Mains Descriptive',p:'md'},
+      {t:'RBI Policies & Reports',d:'Monetary Policy Committee, inflation targets, key reports',cgl:'—',po:'✅ Mains (heavy)',p:'hi'},
+    ]},
+  ];
+
+  document.getElementById('page-syllabus').innerHTML = `
+    <div class="pg-title">Complete Syllabus</div>
+    <div class="pg-sub">SSC CGL + IBPS PO · Priority-tagged · ⭐ = SE advantage</div>
+    ${sections.map(s => `
+      <div class="syl-sec">
+        <div class="syl-hdr" style="color:${s.color}">${s.title}</div>
+        <div class="syl-table">
+          <div class="syl-row hdr"><div class="syl-cell">Topic</div><div class="syl-cell">Description</div><div class="syl-cell">CGL</div><div class="syl-cell">IBPS PO</div><div class="syl-cell">Priority</div></div>
+          ${s.topics.map((t,i) => `
+            <div class="syl-row" style="background:${i%2?'var(--surface2)':'var(--surface)'}">
+              <div class="syl-cell"><div class="syl-topic">${t.t}</div>${t.se?'<div class="syl-note">⭐ SE Advantage</div>':''}</div>
+              <div class="syl-cell" style="color:var(--muted);font-size:12px">${t.d}</div>
+              <div class="syl-cell" style="font-size:11px;color:var(--muted)">${t.cgl}</div>
+              <div class="syl-cell" style="font-size:11px;color:var(--muted)">${t.po}</div>
+              <div class="syl-cell"><span class="${t.p}">${t.p==='hi'?'🔴 HIGH':t.p==='md'?'🟡 MED':'🟢 LOW'}</span></div>
+            </div>`).join('')}
+        </div>
+      </div>`).join('')}`;
+}
+
+// ── RESOURCES ─────────────────────────────────────────────────────
+function initResources() {
+  const sections = [
+    {title:'📐 Quantitative Aptitude',color:'var(--g)',items:[
+      {name:'Abhinay Maths',desc:'Best for shortcuts & tricks. All PO Quant topics systematically.',link:'https://www.youtube.com/@AbhinayMaths',type:'YouTube'},
+      {name:'Ashish Arora (PW)',desc:'DI & Arithmetic — exam-focused, very clear explanations.',link:'https://www.youtube.com/@AshishAroraPhysicsWallah',type:'YouTube'},
+      {name:'Adda247 Quant',desc:'Topic-wise Bank PO videos, previous year Qs discussed.',link:'https://www.youtube.com/@adda247',type:'YouTube'},
+    ]},
+    {title:'🧩 Reasoning Ability',color:'var(--b)',items:[
+      {name:'Ankush Lamba',desc:'Best for puzzles & seating arrangement — bank exam specialist.',link:'https://www.youtube.com/@AnkushLamba',type:'YouTube'},
+      {name:'Piyush Varshney',desc:'High-level puzzles & tricks for PO level. 1.7M subscribers.',link:'https://www.youtube.com/@reasoningbypiyushvarshney',type:'YouTube'},
+      {name:'Study IQ — Bank IQ',desc:'SBI PO & IBPS PO reasoning live classes.',link:'https://www.youtube.com/@BankIQbyStudyIQ',type:'YouTube'},
+    ]},
+    {title:'📝 English Language',color:'var(--a)',items:[
+      {name:'The Hindu Editorial',desc:'Read 1 editorial daily — builds RC, vocabulary and current affairs.',link:'https://www.thehindu.com/opinion/editorial/',type:'Website'},
+      {name:'Adda247 English',desc:'Error spotting, cloze test, para jumbles — Bank PO pattern.',link:'https://www.youtube.com/@adda247',type:'YouTube'},
+      {name:'Gradeup English PDFs',desc:'Free topic-wise PDFs for grammar, comprehension & vocabulary.',link:'https://gradeup.co',type:'Free PDFs'},
+    ]},
+    {title:'🌍 Current Affairs & Banking GK',color:'var(--p)',items:[
+      {name:'GKToday',desc:'Daily CA quizzes, banking awareness, static GK. Completely free.',link:'https://www.gktoday.in',type:'Website'},
+      {name:'Adda247 Monthly CA PDF',desc:'Download monthly current affairs PDF every month.',link:'https://www.adda247.com/monthly-current-affairs-pdf/',type:'Free PDF'},
+      {name:'Oliveboard Banking GK',desc:'Free banking eBooks, RBI/SEBI capsule, financial terms.',link:'https://www.oliveboard.in/blog/free-mock-tests/',type:'Free eBook'},
+    ]},
+    {title:'🎯 Mock Tests (Free)',color:'var(--r)',items:[
+      {name:'Oliveboard — IBPS PO',desc:'Weekly live tests Fri–Sun. Detailed analytics, exam-pattern Qs.',link:'https://www.oliveboard.in/ibps-po-live-test/',type:'Free Mock'},
+      {name:'Oliveboard — SBI PO',desc:'First full mock free. SBI PO prelim pattern, sectional timing.',link:'https://www.oliveboard.in/sbi-po-mock-test/',type:'Free Mock'},
+      {name:'Testbook — IBPS PO',desc:'Free IBPS PO & SBI PO mocks available in free tier.',link:'https://testbook.com/ibps-po/free-mock-test',type:'Free Mock'},
+      {name:"BYJU's Exam Prep",desc:'Free tier mocks, previous year papers, daily practice Qs.',link:'https://byjusexamprep.com',type:'Free Mock'},
+    ]},
+  ];
+  document.getElementById('page-resources').innerHTML = `
+    <div class="pg-title">Free Resources</div>
+    <div class="pg-sub">100% free — no course purchase needed for Prelims preparation</div>
+    ${sections.map(s => `
+      <h3 style="font-size:14px;font-weight:700;color:${s.color};margin-bottom:12px">${s.title}</h3>
+      <div class="res-grid" style="margin-bottom:24px">
+        ${s.items.map(r => `
+          <div class="res-card">
+            <div class="res-type" style="color:${s.color}">${r.type}</div>
+            <div class="res-name">${r.name}</div>
+            <div class="res-desc">${r.desc}</div>
+            <a href="${r.link}" target="_blank" class="res-btn">Open →</a>
+          </div>`).join('')}
+      </div>`).join('')}`;
+}
+
+// ── TRACKER ───────────────────────────────────────────────────────
+function buildTracker() {
+  const d = new Date('2026-03-23'), end = new Date('2026-08-01');
+  const m2p = {3:'Phase 1',4:'Phase 1',5:'Phase 2',6:'Phase 2',7:'Phase 3',8:'Phase 3'};
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let rows = '';
+  const cur = new Date(d);
+  while (cur <= end) {
+    const key = cur.toISOString().slice(0,10);
+    const ph = m2p[cur.getMonth()+1]||'Phase 3';
+    const pc = ph.includes('1')?'tr-p1':ph.includes('2')?'tr-p2':'tr-p3';
+    const s = DB[key]||{};
+    rows += `<tr class="${pc}">
+      <td>${cur.toLocaleDateString('en-IN',{day:'2-digit',month:'short'})}</td>
+      <td style="color:var(--muted)">${days[cur.getDay()]}</td>
+      <td style="font-size:11px;color:var(--muted)">${ph}</td>
+      <td><input class="ti" data-key="${key}" data-f="studied" value="${s.studied||''}" style="width:28px;${s.studied==='Y'?'color:var(--g);font-weight:700':''}"></td>
+      <td><input class="ti" data-key="${key}" data-f="hrs"     value="${s.hrs||''}"     style="width:38px"></td>
+      <td><input class="ti" data-key="${key}" data-f="q"       value="${s.q||''}"       style="width:32px"></td>
+      <td><input class="ti" data-key="${key}" data-f="r"       value="${s.r||''}"       style="width:32px"></td>
+      <td><input class="ti" data-key="${key}" data-f="e"       value="${s.e||''}"       style="width:32px"></td>
+      <td><input class="ti" data-key="${key}" data-f="ca"      value="${s.ca||''}"      style="width:32px"></td>
+      <td><input class="ti" data-key="${key}" data-f="bk"      value="${s.bk||''}"      style="width:32px"></td>
+      <td><input class="ti" data-key="${key}" data-f="mock"    value="${s.mock||''}"    style="width:38px"></td>
+      <td><input class="ti" data-key="${key}" data-f="energy"  value="${s.energy||''}"  style="width:30px"></td>
+      <td><input class="ti" data-key="${key}" data-f="notes"   value="${s.notes||''}"   style="width:120px;text-align:left"></td>
+    </tr>`;
+    cur.setDate(cur.getDate()+1);
+  }
+
+  const studied = getStudiedDays(), hrs = getTotalHrs().toFixed(0);
+  const scores = getMockScores();
+  const avgHrs = studied ? (getTotalHrs()/studied).toFixed(1) : 0;
+
+  document.getElementById('page-tracker').innerHTML = `
+    <div class="pg-title">Daily Study Tracker</div>
+    <div class="pg-sub">Type Y in Studied? · Enter hours · Data auto-saves in browser</div>
+    <div class="stats">
+      <div class="sc g"><div class="sc-lbl">Days Studied</div><div class="sc-val">${studied}</div><div class="sc-hint">/ 132 days</div></div>
+      <div class="sc b"><div class="sc-lbl">Total Hrs</div><div class="sc-val">${hrs}</div><div class="sc-hint">target: 280 hrs</div></div>
+      <div class="sc a"><div class="sc-lbl">Avg Hrs/Day</div><div class="sc-val">${avgHrs}</div><div class="sc-hint">target: 2.5 hrs</div></div>
+      <div class="sc r"><div class="sc-lbl">Best Mock</div><div class="sc-val">${scores.length?Math.max(...scores):0}</div><div class="sc-hint">avg: ${scores.length?(scores.reduce((a,b)=>a+b)/scores.length).toFixed(1):0} / target: 80</div></div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th>Date</th><th>Day</th><th>Phase</th>
+          <th>Studied?<br><small style="font-weight:400;text-transform:none">Y/N</small></th>
+          <th>Hrs</th><th>Quant</th><th>Reas</th><th>Eng</th><th>CA/GK</th><th>Bank</th><th>Mock</th><th>Energy<br>1-5</th><th>Notes</th>
+        </tr></thead>
+        <tbody id="tbdy">${rows}</tbody>
+      </table>
+    </div>`;
+
+  document.getElementById('tbdy').addEventListener('change', function(e) {
+    const inp = e.target.closest('input.ti');
+    if (!inp) return;
+    set(inp.dataset.key, inp.dataset.f, inp.value);
+    if (inp.dataset.f === 'studied') {
+      inp.style.color = inp.value === 'Y' ? 'var(--g)' : '';
+      inp.style.fontWeight = inp.value === 'Y' ? '700' : '';
+    }
+  });
+}
+
+// ── SLEEP ─────────────────────────────────────────────────────────
+function buildSleep() {
+  const d = new Date('2026-03-23'), end = new Date('2026-08-01');
+  const m2p = {3:'Phase 1',4:'Phase 1',5:'Phase 2',6:'Phase 2',7:'Phase 3',8:'Phase 3'};
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let rows = '';
+  const cur = new Date(d);
+  while (cur <= end) {
+    const key = 's_' + cur.toISOString().slice(0,10);
+    const ph = m2p[cur.getMonth()+1]||'Phase 3';
+    const pc = ph.includes('1')?'tr-p1':ph.includes('2')?'tr-p2':'tr-p3';
+    const s = DB[key]||{};
+    const hrs = parseFloat(s.hrs||0);
+    const st = hrs===0?'—':hrs>=8?'😴 Excellent':hrs>=7?'✅ Good':hrs>=6?'⚠️ Fair':'🔴 Poor';
+    rows += `<tr class="${pc}">
+      <td>${cur.toLocaleDateString('en-IN',{day:'2-digit',month:'short'})}</td>
+      <td style="color:var(--muted)">${days[cur.getDay()]}</td>
+      <td><input class="ti si" data-key="${key}" data-f="bed"     value="${s.bed||''}"     style="width:70px"></td>
+      <td><input class="ti si" data-key="${key}" data-f="hrs"     value="${s.hrs||''}"     style="width:38px;color:var(--p);font-weight:600"></td>
+      <td><input class="ti si" data-key="${key}" data-f="wake"    value="${s.wake||''}"    style="width:70px"></td>
+      <td><input class="ti si" data-key="${key}" data-f="quality" value="${s.quality||''}" style="width:34px"></td>
+      <td style="font-size:12px">${st}</td>
+      <td><input class="ti si" data-key="${key}" data-f="mood"    value="${s.mood||''}"    style="width:34px;color:var(--p)"></td>
+      <td><input class="ti si" data-key="${key}" data-f="studied" value="${s.studied||''}" style="width:28px"></td>
+      <td><input class="ti si" data-key="${key}" data-f="notes"   value="${s.notes||''}"   style="width:120px;text-align:left"></td>
+    </tr>`;
+    cur.setDate(cur.getDate()+1);
+  }
+
+  const sh = getSleepHrs();
+  const avg = sh.length?(sh.reduce((a,b)=>a+b)/sh.length).toFixed(1):0;
+  const gd = sh.filter(h=>h>=7).length, pd = sh.filter(h=>h<6).length;
+
+  document.getElementById('page-sleep').innerHTML = `
+    <div class="pg-title">Sleep Tracker</div>
+    <div class="pg-sub">Target 7-8 hrs nightly · Good sleep = better retention · Auto-saves in browser</div>
+    <div class="stats">
+      <div class="sc p"><div class="sc-lbl">Avg Sleep Hrs</div><div class="sc-val">${avg}</div><div class="sc-hint">target: 7-8 hrs</div></div>
+      <div class="sc g"><div class="sc-lbl">Days ≥ 7 hrs</div><div class="sc-val">${gd}</div><div class="sc-hint">keep it up!</div></div>
+      <div class="sc r"><div class="sc-lbl">Days &lt; 6 hrs</div><div class="sc-val">${pd}</div><div class="sc-hint">avoid these</div></div>
+      <div class="sc b"><div class="sc-lbl">Sleep Score</div><div class="sc-val">${sh.length?(gd/sh.length*10).toFixed(1):0}</div><div class="sc-hint">/ 10</div></div>
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:12px">😴 Excellent = 8+ hrs &nbsp;·&nbsp; ✅ Good = 7-8 hrs &nbsp;·&nbsp; ⚠️ Fair = 6-7 hrs &nbsp;·&nbsp; 🔴 Poor = &lt;6 hrs</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th>Date</th><th>Day</th><th>Bed Time</th><th>Sleep Hrs</th><th>Wake Time</th>
+          <th>Quality<br>1-5</th><th>Status</th><th>Mood AM<br>1-5</th><th>Studied?</th><th>Notes</th>
+        </tr></thead>
+        <tbody id="sbdy">${rows}</tbody>
+      </table>
+    </div>`;
+
+  document.getElementById('sbdy').addEventListener('change', function(e) {
+    const inp = e.target.closest('input.si');
+    if (!inp) return;
+    set(inp.dataset.key, inp.dataset.f, inp.value);
+    if (inp.dataset.f === 'hrs') buildSleep();
+  });
+}
+
+// ── INIT ──────────────────────────────────────────────────────────
+buildDashboard();
+buildToday();
+initPlan();
+initWeeks();
+initSyllabus();
+initResources();
+</script>
+</body>
+</html>
